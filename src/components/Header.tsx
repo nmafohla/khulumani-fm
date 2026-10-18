@@ -51,13 +51,13 @@ export function Header() {
       <div className="bg-white border-b border-khulumani-border text-xs">
         <div className="max-w-7xl mx-auto pr-4 sm:pr-6 lg:pr-8 h-10 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="bg-[#0e9384] text-white font-black uppercase tracking-wider pl-4 pr-7 py-2.5 clip-dedications-ribbon inline-flex items-center gap-2 shrink-0">
+            <div className="bg-[#119e45] text-white font-black uppercase tracking-wider pl-4 pr-7 py-2.5 clip-dedications-ribbon inline-flex items-center gap-2 shrink-0">
               <Volume2 className="w-3.5 h-3.5" />
               <span>DEDICATIONS</span>
             </div>
             <p className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-khulumani-muted truncate">
               CURRENTLY THERE ARE NO NEW DEDICATIONS • ON AIR:{" "}
-              <span className="text-khulumani-greenDark">
+              <span className="text-[#141414]">
                 {currentShow.title} ({currentShow.presenter})
               </span>
             </p>
@@ -66,20 +66,20 @@ export function Header() {
           <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
             <a
               href={`tel:${contacts.phone.replace(/\s+/g, "")}`}
-              className="hidden lg:inline-flex items-center gap-1 text-khulumani-ink hover:text-khulumani-green font-bold"
+              className="hidden lg:inline-flex items-center gap-1 text-[#141414] hover:text-[#119e45] font-bold"
             >
-              <Phone className="w-3.5 h-3.5 text-khulumani-green" />
+              <Phone className="w-3.5 h-3.5 text-[#119e45]" />
               <span>{contacts.phone}</span>
             </a>
             <div className="hidden sm:flex items-center gap-1.5 font-mono font-bold bg-khulumani-greenLight text-khulumani-greenDark px-2.5 py-1 rounded">
-              <Clock className="w-3.5 h-3.5 text-khulumani-green" />
+              <Clock className="w-3.5 h-3.5 text-[#119e45]" />
               <span>{timeString}</span>
             </div>
             <Link
               href="/crm"
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-khulumani-greenDark hover:bg-khulumani-green text-white font-extrabold transition-colors"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#141414] hover:bg-[#119e45] text-white font-extrabold transition-colors"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
+              <ShieldCheck className="w-3.5 h-3.5 text-[#4ade80]" />
               <span>{sessionUser ? "CRM Studio" : "CRM Login"}</span>
             </Link>
           </div>
@@ -117,8 +117,8 @@ export function Header() {
                   href={item.href}
                   className={`px-3 h-full inline-flex items-center text-xs lg:text-sm font-black tracking-wider border-b-4 transition-all ${
                     active
-                      ? "border-khulumani-green text-khulumani-greenDark"
-                      : "border-transparent text-khulumani-ink hover:text-khulumani-green hover:border-khulumani-green/40"
+                      ? "border-[#119e45] text-[#119e45]"
+                      : "border-transparent text-[#141414] hover:text-[#119e45] hover:border-[#119e45]/40"
                   }`}
                 >
                   {item.label}
@@ -135,7 +135,7 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Khulumani FM Facebook"
-                className="w-8 h-8 rounded-full bg-khulumani-green hover:bg-khulumani-greenDark text-white flex items-center justify-center text-xs font-black transition-colors"
+                className="w-9 h-9 rounded-full bg-[#119e45] hover:bg-[#141414] text-white flex items-center justify-center text-xs font-black transition-colors"
               >
                 f
               </a>
@@ -144,7 +144,7 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Khulumani FM X"
-                className="w-8 h-8 rounded-full bg-khulumani-green hover:bg-khulumani-greenDark text-white flex items-center justify-center text-xs font-black transition-colors"
+                className="w-9 h-9 rounded-full bg-[#119e45] hover:bg-[#141414] text-white flex items-center justify-center text-xs font-black transition-colors"
               >
                 𝕏
               </a>
@@ -153,7 +153,7 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Khulumani FM Instagram"
-                className="w-8 h-8 rounded-full bg-khulumani-green hover:bg-khulumani-greenDark text-white flex items-center justify-center text-xs font-black transition-colors"
+                className="w-9 h-9 rounded-full bg-[#119e45] hover:bg-[#141414] text-white flex items-center justify-center text-xs font-black transition-colors"
               >
                 IG
               </a>
@@ -162,10 +162,10 @@ export function Header() {
             <button
               type="button"
               onClick={togglePlay}
-              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-extrabold transition-all shadow-md active:scale-95 ${
+              className={`min-h-[44px] inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-extrabold shadow-md apple-spring active:scale-[0.96] ${
                 isPlaying
-                  ? "bg-khulumani-tangelo text-white shadow-khulumani-tangelo/25"
-                  : "bg-khulumani-green hover:bg-khulumani-greenDark text-white shadow-khulumani-green/25"
+                  ? "bg-[#141414] text-white"
+                  : "bg-[#119e45] hover:bg-[#0d7e36] text-white"
               }`}
             >
               {isPlaying ? (

@@ -6,6 +6,11 @@ interface BroadcastMotionCanvasProps {
   isPlaying: boolean;
 }
 
+/**
+ * Renders the Khulumani FM logo's signature Bulawayo Skyline silhouette,
+ * curved horizon arc, and reactive Kelly-Green (#119E45) + Crisp White (#FFFFFF)
+ * FM carrier wave ribbons at 60fps.
+ */
 export function BroadcastMotionCanvas({
   isPlaying,
 }: BroadcastMotionCanvasProps) {
@@ -36,40 +41,47 @@ export function BroadcastMotionCanvas({
     resize();
     window.addEventListener("resize", resize);
 
+    // Exact Khulumani FM Logo palette: Kelly Green (#119E45) & Pure White (#FFFFFF)
     const ribbons = [
       {
-        color: "rgba(28, 159, 86, 0.42)",
-        glow: "rgba(16, 185, 129, 0.6)",
-        amplitude: 28,
+        color: "rgba(17, 158, 69, 0.58)",
+        glow: "rgba(17, 158, 69, 0.8)",
+        amplitude: 26,
         frequency: 0.0065,
         speed: 0.028,
-        verticalOffset: 0.52,
+        verticalOffset: 0.54,
       },
       {
-        color: "rgba(20, 184, 166, 0.34)",
-        glow: "rgba(45, 212, 191, 0.5)",
-        amplitude: 36,
-        frequency: 0.005,
-        speed: -0.021,
+        color: "rgba(255, 255, 255, 0.42)",
+        glow: "rgba(255, 255, 255, 0.65)",
+        amplitude: 20,
+        frequency: 0.008,
+        speed: -0.022,
         verticalOffset: 0.58,
       },
       {
-        color: "rgba(245, 158, 11, 0.32)",
-        glow: "rgba(251, 191, 36, 0.55)",
-        amplitude: 22,
-        frequency: 0.0085,
-        speed: 0.036,
-        verticalOffset: 0.46,
+        color: "rgba(34, 197, 94, 0.36)",
+        glow: "rgba(17, 158, 69, 0.55)",
+        amplitude: 34,
+        frequency: 0.005,
+        speed: 0.034,
+        verticalOffset: 0.48,
       },
     ];
 
-    const orbs = Array.from({ length: 14 }, (_, idx) => ({
-      xRatio: (idx * 0.073 + 0.05) % 1,
-      yRatio: (idx * 0.13 + 0.15) % 0.8,
-      radius: 1.8 + (idx % 4) * 1.1,
-      speedY: 0.15 + (idx % 3) * 0.1,
-      hue: idx % 3 === 0 ? "#34d399" : idx % 3 === 1 ? "#fbbf24" : "#2dd4bf",
-    }));
+    // Normalized Bulawayo skyline profile matching logo.png (including the tall tower at ~0.64)
+    const skylineBlocks = [
+      { x: 0.18, w: 0.04, h: 0.11 },
+      { x: 0.23, w: 0.05, h: 0.07 },
+      { x: 0.29, w: 0.06, h: 0.09 },
+      { x: 0.36, w: 0.04, h: 0.12 },
+      { x: 0.41, w: 0.05, h: 0.08 },
+      { x: 0.47, w: 0.07, h: 0.13 },
+      { x: 0.55, w: 0.06, h: 0.09 },
+      { x: 0.62, w: 0.055, h: 0.29 }, // Iconic tall Bulawayo tower from logo.png
+      { x: 0.69, w: 0.09, h: 0.11 },
+      { x: 0.79, w: 0.07, h: 0.08 },
+    ];
 
     const renderFrame = () => {
       const parent = canvas.parentElement;
@@ -78,30 +90,59 @@ export function BroadcastMotionCanvas({
 
       ctx.clearRect(0, 0, width, height);
 
-      // Subtle radial studio aura
+      // Subtle Khulumani Kelly-Green studio aura
       const aura = ctx.createRadialGradient(
-        width * 0.72,
-        height * 0.45,
-        10,
-        width * 0.72,
-        height * 0.45,
+        width * 0.64,
+        height * 0.42,
+        12,
+        width * 0.64,
+        height * 0.42,
         width * 0.55
       );
       aura.addColorStop(
         0,
-        isPlaying ? "rgba(16, 185, 129, 0.24)" : "rgba(16, 185, 129, 0.12)"
+        isPlaying ? "rgba(17, 158, 69, 0.28)" : "rgba(17, 158, 69, 0.14)"
       );
       aura.addColorStop(
-        0.5,
-        isPlaying ? "rgba(245, 158, 11, 0.12)" : "rgba(20, 184, 166, 0.06)"
+        0.55,
+        isPlaying ? "rgba(255, 255, 255, 0.08)" : "rgba(17, 158, 69, 0.05)"
       );
-      aura.addColorStop(1, "rgba(6, 16, 12, 0)");
+      aura.addColorStop(1, "rgba(10, 15, 12, 0)");
       ctx.fillStyle = aura;
       ctx.fillRect(0, 0, width, height);
 
+      // Draw subtle Bulawayo Skyline silhouette on the horizon (matching logo.png)
+      const horizonY = height * 0.78;
+      ctx.save();
+      ctx.fillStyle = "rgba(10, 14, 11, 0.55)";
+      ctx.strokeStyle = "rgba(17, 158, 69, 0.32)";
+      ctx.lineWidth = 1.2;
+      for (const b of skylineBlocks) {
+        const bx = b.x * width;
+        const bw = b.w * width;
+        const bh = b.h * height;
+        const by = horizonY - bh;
+        ctx.fillRect(bx, by, bw, bh);
+        ctx.strokeRect(bx, by, bw, bh);
+      }
+
+      // Sweeping logo horizon arc underneath skyline
+      ctx.beginPath();
+      ctx.moveTo(width * 0.05, horizonY + 18);
+      ctx.quadraticCurveTo(
+        width * 0.5,
+        horizonY - 14,
+        width * 0.95,
+        horizonY + 18
+      );
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.restore();
+
       const energyMultiplier = isPlaying ? 1.55 : 0.65;
 
-      // Render volumetric FM sine-wave ribbons
+      // Render volumetric Khulumani Green & White FM sine-wave ribbons
       for (const ribbon of ribbons) {
         ctx.save();
         ctx.beginPath();
@@ -129,22 +170,6 @@ export function BroadcastMotionCanvas({
         ctx.shadowColor = ribbon.glow;
         ctx.shadowBlur = isPlaying ? 16 : 8;
         ctx.stroke();
-        ctx.restore();
-      }
-
-      // Render floating acoustic studio nodes
-      for (const orb of orbs) {
-        const x = orb.xRatio * width + Math.sin(phase * 0.5 + orb.radius) * 14;
-        const y =
-          (((orb.yRatio * height - phase * orb.speedY * 18) % height) +
-            height) %
-          height;
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(x, y, orb.radius * (isPlaying ? 1.25 : 0.9), 0, Math.PI * 2);
-        ctx.fillStyle = orb.hue;
-        ctx.globalAlpha = isPlaying ? 0.55 : 0.25;
-        ctx.fill();
         ctx.restore();
       }
 

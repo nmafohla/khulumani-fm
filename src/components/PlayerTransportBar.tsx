@@ -25,7 +25,7 @@ export function PlayerTransportBar() {
   const isReconnecting = status === "reconnecting";
 
   return (
-    <div className="relative z-10 mt-6 p-4 sm:px-6 rounded-3xl bg-black/60 backdrop-blur-2xl border border-white/15 flex flex-col lg:flex-row items-center justify-between gap-5">
+    <div className="relative z-10 mt-6 p-4 sm:px-6 rounded-3xl bg-[#111613]/85 backdrop-blur-2xl border border-white/20 flex flex-col lg:flex-row items-center justify-between gap-5">
       <div className="flex items-center gap-4 w-full lg:w-auto">
         <button
           type="button"
@@ -36,8 +36,8 @@ export function PlayerTransportBar() {
           }
           className={`min-w-[52px] min-h-[52px] px-5 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider inline-flex items-center justify-center gap-2.5 shadow-lg apple-spring active:scale-[0.96] shrink-0 ${
             isPlaying
-              ? "bg-[#c24b00] hover:bg-orange-600 text-white"
-              : "bg-khulumani-green hover:bg-khulumani-greenDark text-white"
+              ? "bg-white text-[#141414] hover:bg-neutral-200"
+              : "bg-[#119e45] hover:bg-[#0d7e36] text-white"
           }`}
         >
           {isPlaying ? (
@@ -54,10 +54,10 @@ export function PlayerTransportBar() {
         </button>
 
         <div className="min-w-0">
-          <span className="text-[11px] font-black uppercase tracking-widest text-amber-300 block">
+          <span className="text-[11px] font-black uppercase tracking-widest text-[#22c55e] block">
             {isPlaying
               ? "STREAMING MONTROSE STUDIOS"
-              : "ZERO-DROPOUT AUDIO ENGINE"}
+              : "IZWI LETHU, IGUGU LETHU • 95.0 FM"}
           </span>
           <p className="text-sm font-black text-white truncate">
             {currentShow.title} — {currentShow.presenter}
@@ -65,15 +65,15 @@ export function PlayerTransportBar() {
         </div>
       </div>
 
-      {/* 24-Bar Animated Equalizer */}
-      <div className="flex items-end justify-center gap-1 h-11 w-full sm:w-52 px-3 py-2 rounded-2xl bg-white/10 border border-white/15">
+      {/* 24-Bar Animated Equalizer in Strictly Khulumani Green & Crisp White */}
+      <div className="flex items-end justify-center gap-1 h-11 w-full sm:w-52 px-3 py-2 rounded-2xl bg-black/50 border border-white/15">
         {SPECTRUM_BARS.map((maxHeight, index) => {
           const heightPct = isPlaying ? maxHeight : 22;
           const duration = 0.45 + (index % 5) * 0.14;
           return (
             <div
               key={index}
-              className="w-1.5 rounded-full transition-all bg-gradient-to-t from-emerald-400 via-teal-300 to-amber-300"
+              className="w-1.5 rounded-full transition-all bg-gradient-to-t from-[#119e45] via-[#22c55e] to-white"
               style={{
                 height: `${heightPct}%`,
                 opacity: isPlaying ? 0.95 : 0.4,
@@ -98,7 +98,7 @@ export function PlayerTransportBar() {
             {isMuted || volume === 0 ? (
               <VolumeX className="w-5 h-5 text-red-400" />
             ) : (
-              <Volume2 className="w-5 h-5 text-amber-300" />
+              <Volume2 className="w-5 h-5 text-[#22c55e]" />
             )}
           </button>
           <input
@@ -108,7 +108,7 @@ export function PlayerTransportBar() {
             step="0.01"
             value={isMuted ? 0 : volume}
             onChange={(e) => setVolume(parseFloat(e.target.value))}
-            className="w-full accent-amber-400 cursor-pointer h-2 bg-white/30 rounded-lg"
+            className="w-full accent-[#119e45] cursor-pointer h-2 bg-white/30 rounded-lg"
             aria-label="Volume slider"
           />
           <span className="text-xs font-mono font-bold text-white/90 w-9 text-right">
@@ -120,7 +120,7 @@ export function PlayerTransportBar() {
           type="button"
           onClick={forceReconnect}
           title="Reconnect audio stream cleanly"
-          className="min-h-[44px] px-4 rounded-xl text-xs font-bold text-white bg-white/15 hover:bg-khulumani-green border border-white/25 inline-flex items-center gap-1.5 apple-spring active:scale-[0.96] shrink-0"
+          className="min-h-[44px] px-4 rounded-xl text-xs font-bold text-white bg-white/15 hover:bg-[#119e45] border border-white/25 inline-flex items-center gap-1.5 apple-spring active:scale-[0.96] shrink-0"
         >
           <RotateCw
             className={`w-3.5 h-3.5 ${isReconnecting ? "animate-spin" : ""}`}

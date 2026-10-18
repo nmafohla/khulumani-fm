@@ -7,12 +7,10 @@ import {
   Volume2,
   VolumeX,
   X,
-  Radio,
   Mic2,
   MessageCircle,
   ShieldCheck,
   Activity,
-  Sparkles,
 } from "lucide-react";
 import { useRadio } from "@/context/RadioPlayerContext";
 import { useSiteContent } from "@/context/SiteContentContext";
@@ -49,7 +47,7 @@ export function AppleNowPlayingSheet({
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex items-end justify-center bg-black/70 backdrop-blur-md transition-opacity"
+      className="fixed inset-0 z-[70] flex items-end justify-center bg-black/75 backdrop-blur-md transition-opacity"
       role="dialog"
       aria-modal="true"
       aria-label="Khulumani FM 95.0 Full Studio Broadcast Sheet"
@@ -57,29 +55,40 @@ export function AppleNowPlayingSheet({
       {/* Backdrop click to dismiss */}
       <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
 
-      {/* Apple HIG Slide-Up Sheet with cubic-bezier(0.32, 0.72, 0, 1) spring motion */}
-      <div className="relative z-10 w-full max-w-4xl rounded-t-[36px] bg-[#071510]/95 border-t border-x border-white/15 text-white shadow-2xl overflow-hidden apple-sheet-enter max-h-[92vh] overflow-y-auto">
+      {/* Apple HIG Slide-Up Sheet in Khulumani Logo Palette (#119E45 Green, #141414 Black, #FFFFFF White) */}
+      <div className="relative z-10 w-full max-w-4xl rounded-t-[36px] bg-[#0c120e]/95 border-t-2 border-x border-[#119e45]/50 text-white shadow-2xl overflow-hidden apple-sheet-enter max-h-[92vh] overflow-y-auto">
         <BroadcastMotionCanvas isPlaying={isPlaying} />
 
         {/* iOS Pill Drag Handle & Close Button */}
         <div className="relative z-10 pt-3 pb-2 px-6 flex items-center justify-between">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-emerald-300">
-            <Sparkles className="w-3.5 h-3.5" />
-            Apple Radio Studio Mode • 95.0 FM
-          </span>
+          <div className="inline-flex items-center gap-2.5">
+            <div className="px-2.5 py-1 rounded-xl bg-white shadow">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/logo.png"
+                alt="Khulumani FM 95.0"
+                width={78}
+                height={40}
+                className="h-6 w-auto object-contain"
+              />
+            </div>
+            <span className="text-xs font-black uppercase tracking-widest text-[#4ade80]">
+              Studio Mode • 95.0 FM
+            </span>
+          </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Minimize Now Playing Sheet"
             className="w-12 h-6 flex items-center justify-center touch-manipulation active:scale-[0.96] transition-transform duration-150"
           >
-            <span className="w-11 h-1.5 rounded-full bg-white/35 hover:bg-white/60 transition-colors" />
+            <span className="w-11 h-1.5 rounded-full bg-white/40 hover:bg-white/70 transition-colors" />
           </button>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close Studio Sheet"
-            className="min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center touch-manipulation active:scale-[0.96] transition-transform duration-150"
+            className="min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-[#119e45] flex items-center justify-center touch-manipulation active:scale-[0.96] transition-transform duration-150"
           >
             <X className="w-5 h-5" />
           </button>
@@ -87,31 +96,28 @@ export function AppleNowPlayingSheet({
 
         {/* Main Studio Platter + Live Show Info */}
         <div className="relative z-10 px-6 sm:px-10 pb-10 pt-2 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-          {/* Spinning Broadcast Disc Platter */}
+          {/* Spinning Khulumani Logo Platter */}
           <div className="md:col-span-5 flex flex-col items-center">
-            <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-full p-2 bg-gradient-to-tr from-emerald-500/40 via-amber-400/30 to-teal-400/40 shadow-2xl">
+            <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-full p-2 bg-gradient-to-tr from-[#119e45]/60 via-white/30 to-[#119e45]/60 shadow-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/afro-pulse-disc.webp"
                 alt="Khulumani FM 95.0 Broadcast Platter"
                 width={256}
                 height={256}
-                className={`w-full h-full rounded-full object-cover border-2 border-white/20 shadow-inner ${
+                className={`w-full h-full rounded-full object-cover border-2 border-white/30 shadow-inner ${
                   isPlaying ? "animate-spin-slow" : ""
                 }`}
               />
-              <div className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-[#071510] border-2 border-amber-300/70 flex items-center justify-center shadow-lg">
-                <Radio className="w-5 h-5 text-amber-300" />
-              </div>
             </div>
 
-            <div className="mt-4 inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold">
-              <span className="inline-flex items-center gap-1 text-amber-300">
+            <div className="mt-4 inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-black/60 border border-white/20 text-xs font-semibold">
+              <span className="inline-flex items-center gap-1 text-[#4ade80]">
                 <Activity className="w-3.5 h-3.5" />
                 {diagnostics.bitrate}
               </span>
-              <span className="inline-flex items-center gap-1 font-mono text-emerald-300">
-                <ShieldCheck className="w-3.5 h-3.5" />
+              <span className="inline-flex items-center gap-1 font-mono text-white">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#22c55e]" />
                 {formatUptime(diagnostics.totalUptimeSeconds)}
               </span>
             </div>
@@ -121,10 +127,10 @@ export function AppleNowPlayingSheet({
           <div className="md:col-span-7 space-y-5">
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-black uppercase tracking-widest">
+                <span className="px-3 py-1 rounded-full bg-[#119e45]/25 border border-[#22c55e]/50 text-[#4ade80] text-xs font-black uppercase tracking-widest">
                   LIVE ON 95.0 FM
                 </span>
-                <span className="px-3 py-1 rounded-full bg-white/10 text-amber-300 text-xs font-bold">
+                <span className="px-3 py-1 rounded-full bg-white/10 text-white text-xs font-mono font-bold">
                   {currentShow.timeLabel} CAT
                 </span>
               </div>
@@ -133,20 +139,20 @@ export function AppleNowPlayingSheet({
                 {currentShow.title}
               </h2>
 
-              <p className="inline-flex items-center gap-2 text-sm sm:text-base font-bold text-emerald-300 mt-1">
-                <Mic2 className="w-4 h-4" />
+              <p className="inline-flex items-center gap-2 text-sm sm:text-base font-bold text-[#4ade80] mt-1">
+                <Mic2 className="w-4 h-4 text-white" />
                 <span>
                   Hosted by {currentShow.presenter} • {currentShow.daysLabel}
                 </span>
               </p>
 
-              <p className="text-xs sm:text-sm text-white/80 mt-2 leading-relaxed">
+              <p className="text-xs sm:text-sm text-white/85 mt-2 leading-relaxed">
                 {currentShow.description}
               </p>
             </div>
 
             {/* Apple HIG 44px+ Transport & Volume Bar */}
-            <div className="p-4 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/15 space-y-4">
+            <div className="p-4 rounded-3xl bg-black/60 backdrop-blur-xl border border-white/20 space-y-4">
               <div className="flex items-center justify-between gap-4">
                 <button
                   type="button"
@@ -156,8 +162,8 @@ export function AppleNowPlayingSheet({
                   }
                   className={`min-h-[56px] px-7 rounded-2xl font-black text-sm uppercase tracking-wider inline-flex items-center gap-3 shadow-lg touch-manipulation active:scale-[0.96] transition-transform duration-150 ${
                     isPlaying
-                      ? "bg-[#c24b00] text-white"
-                      : "bg-emerald-500 hover:bg-emerald-400 text-slate-950"
+                      ? "bg-white text-[#141414]"
+                      : "bg-[#119e45] hover:bg-[#0e853a] text-white"
                   }`}
                 >
                   {isPlaying ? (
@@ -176,7 +182,7 @@ export function AppleNowPlayingSheet({
                 <button
                   type="button"
                   onClick={forceReconnect}
-                  className="min-h-[48px] min-w-[48px] px-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-bold inline-flex items-center gap-2 touch-manipulation active:scale-[0.96] transition-transform duration-150"
+                  className="min-h-[48px] min-w-[48px] px-4 rounded-2xl bg-white/10 hover:bg-[#119e45] border border-white/20 text-xs font-bold inline-flex items-center gap-2 touch-manipulation active:scale-[0.96] transition-transform duration-150"
                 >
                   <RotateCw
                     className={`w-4 h-4 ${isReconnecting ? "animate-spin" : ""}`}
@@ -195,7 +201,7 @@ export function AppleNowPlayingSheet({
                   {isMuted || volume === 0 ? (
                     <VolumeX className="w-5 h-5 text-red-400" />
                   ) : (
-                    <Volume2 className="w-5 h-5 text-amber-300" />
+                    <Volume2 className="w-5 h-5 text-[#22c55e]" />
                   )}
                 </button>
                 <input
@@ -206,7 +212,7 @@ export function AppleNowPlayingSheet({
                   value={isMuted ? 0 : volume}
                   onChange={(e) => setVolume(parseFloat(e.target.value))}
                   aria-label="Studio Sheet Volume"
-                  className="w-full accent-emerald-400 cursor-pointer h-2 bg-white/25 rounded-lg"
+                  className="w-full accent-[#119e45] cursor-pointer h-2 bg-white/30 rounded-lg"
                 />
                 <span className="text-xs font-mono font-bold text-white/90 w-10 text-right">
                   {Math.round((isMuted ? 0 : volume) * 100)}%
@@ -216,8 +222,8 @@ export function AppleNowPlayingSheet({
 
             {/* Up Next & Instant WhatsApp Dedication Row */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
-              <div className="px-4 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-xs">
-                <span className="text-white/60 uppercase font-bold tracking-wider block">
+              <div className="px-4 py-2.5 rounded-2xl bg-white/5 border border-white/15 text-xs">
+                <span className="text-[#4ade80] uppercase font-bold tracking-wider block">
                   Up Next ({nextShow.timeLabel})
                 </span>
                 <span className="font-black text-white">
@@ -229,7 +235,7 @@ export function AppleNowPlayingSheet({
                 href={contacts.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-h-[44px] px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider inline-flex items-center justify-center gap-2 touch-manipulation active:scale-[0.96] transition-transform duration-150"
+                className="min-h-[44px] px-5 rounded-2xl bg-[#119e45] hover:bg-[#0e853a] text-white text-xs font-black uppercase tracking-wider inline-flex items-center justify-center gap-2 touch-manipulation active:scale-[0.96] transition-transform duration-150"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>Send Live Dedication</span>

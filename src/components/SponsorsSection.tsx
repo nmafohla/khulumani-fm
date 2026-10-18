@@ -41,9 +41,9 @@ const SPONSOR_LOGOS = [
 
 export function SponsorsSection() {
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-sponsors-stage shadow-2xl border-2 border-khulumani-ink/80">
-      {/* Cyan-Slate Concert Stage Tint + Jagged Lightning & Grunge Splatter Overlay */}
-      <div className="absolute inset-0 bg-[#0c2336]/60" aria-hidden="true" />
+    <div className="relative overflow-hidden rounded-3xl bg-sponsors-stage shadow-2xl border-2 border-[#141414]">
+      {/* Khulumani Kelly-Green & Jet-Black Stage Tint + Jagged Lightning & Grunge Splatter Overlay */}
+      <div className="absolute inset-0 bg-[#0b1710]/75" aria-hidden="true" />
       <div
         className="absolute inset-0 bg-sponsors-grunge-overlay pointer-events-none opacity-95"
         aria-hidden="true"
@@ -52,20 +52,20 @@ export function SponsorsSection() {
       <div className="relative z-10 px-6 sm:px-10 py-14 sm:py-16">
         {/* Skewed White Parallelogram "SPONSORS" Header Badge */}
         <div className="flex flex-col items-center text-center mb-10">
-          <div className="bg-white text-khulumani-ink font-black text-2xl sm:text-4xl uppercase tracking-wider px-10 py-3 clip-skew-badge shadow-xl">
+          <div className="bg-white text-[#141414] font-black text-2xl sm:text-4xl uppercase tracking-wider px-10 py-3 clip-skew-badge shadow-xl border-b-4 border-[#119e45]">
             SPONSORS
           </div>
-          <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-white/85 mt-3">
+          <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-[#4ade80] mt-3">
             Montrose Studios Broadcast &amp; Music Production Partners
           </p>
         </div>
 
-        {/* 6 Authentic Sponsor Emblems Matching Screenshot 3 */}
+        {/* 6 Authentic Sponsor Emblems */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 items-center justify-items-center max-w-6xl mx-auto">
           {SPONSOR_LOGOS.map((logo) => (
             <div
               key={logo.id}
-              className="group flex items-center justify-center p-4 rounded-2xl bg-black/25 hover:bg-black/45 border border-white/10 hover:border-white/30 transition-all w-full h-32"
+              className="group flex items-center justify-center p-4 rounded-2xl bg-black/40 hover:bg-[#119e45]/30 border border-white/15 hover:border-[#22c55e] apple-spring w-full h-32"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
