@@ -55,3 +55,74 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #1c9f56;
 }
+
+/* Decorative background layers with standard url() fallback before image-set() */
+.bg-play-and-rock {
+  background-image: url("/images/play-and-rock-bg.jpg");
+  background-image: image-set(
+    url("/images/play-and-rock-bg.webp") type("image/webp") 1x,
+    url("/images/play-and-rock-bg.jpg") type("image/jpeg") 1x
+  );
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-player-top-cut {
+  background-image: url("/images/player-top-cut.png");
+  background-image: image-set(
+    url("/images/player-top-cut.webp") type("image/webp") 1x,
+    url("/images/player-top-cut.png") type("image/png") 1x
+  );
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-schedule-collage {
+  background-image: url("/images/schedule-photo-bg.jpg");
+  background-image: image-set(
+    url("/images/schedule-photo-bg.webp") type("image/webp") 1x,
+    url("/images/schedule-photo-bg.jpg") type("image/jpeg") 1x
+  );
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-schedule-grunge-overlay {
+  background-image: url("/images/schedule-grunge-bg.png");
+  background-image: image-set(
+    url("/images/schedule-grunge-bg.webp") type("image/webp") 1x,
+    url("/images/schedule-grunge-bg.png") type("image/png") 1x
+  );
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bg-sponsors-stage {
+  background-image: url("/images/events-bg.jpg");
+  background-image: image-set(
+    url("/images/events-bg.webp") type("image/webp") 1x,
+    url("/images/events-bg.jpg") type("image/jpeg") 1x
+  );
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-sponsors-grunge-overlay {
+  background-image: url("/images/sponsors-grunge-overlay.png");
+  background-image: image-set(
+    url("/images/sponsors-grunge-overlay.webp") type("image/webp") 1x,
+    url("/images/sponsors-grunge-overlay.png") type("image/png") 1x
+  );
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.clip-skew-badge {
+  clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
+}
+
+.clip-dedications-ribbon {
+  clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
+}

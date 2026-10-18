@@ -58,7 +58,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = [
     shows: ["Jam & Toast"],
     scheduleSummary: "Monday to Friday • 6:00 am – 9:00 am",
     bio: "Co-host on Jam & Toast alongside Philip, delivering sharp sports updates, traffic reports, and morning banter every weekday.",
-    image: "/images/post-1.jpg",
+    image: "/images/black-d.jpg",
   },
   {
     id: "khanyile",
@@ -80,7 +80,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = [
     scheduleSummary:
       "Tue & Thu (9:00 am – 12:00 pm) • Sat & Sun (12:00 pm – 4:00 pm)",
     bio: "Bringing warmth and energy to mid-mornings on Chuu and driving weekend afternoons on Koloi Yamonate.",
-    image: "/images/post-2.jpg",
+    image: "/images/tracy-poster.jpg",
   },
   {
     id: "maria",

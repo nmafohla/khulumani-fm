@@ -10,7 +10,7 @@ import {
   Pause,
   Menu,
   X,
-  Radio,
+  Volume2,
   ShieldCheck,
 } from "lucide-react";
 import { getBulawayoTime } from "@/lib/schedule";
@@ -18,12 +18,12 @@ import { useRadio } from "@/context/RadioPlayerContext";
 import { useSiteContent } from "@/context/SiteContentContext";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Home" },
-  { href: "/news", label: "News" },
-  { href: "/shows-schedule", label: "Schedule" },
-  { href: "/charts-elementor", label: "Charts" },
-  { href: "/team-members", label: "Personalities" },
-  { href: "/contacts", label: "Contacts" },
+  { href: "/", label: "HOME" },
+  { href: "/news", label: "NEWS" },
+  { href: "/shows-schedule", label: "SHOWS SCHEDULE" },
+  { href: "/charts-elementor", label: "CHARTS" },
+  { href: "/team-members", label: "PERSONALITIES" },
+  { href: "/contacts", label: "CONTACTS" },
 ] as const;
 
 export function Header() {
@@ -46,42 +46,40 @@ export function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 shadow-sm">
-      {/* Top Broadcast Strip */}
-      <div className="bg-gradient-to-r from-khulumani-greenDark via-khulumani-green to-khulumani-teal text-white text-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between">
-          <div className="flex items-center gap-3 sm:gap-5">
-            <span className="inline-flex items-center gap-1.5 font-bold tracking-wide">
-              <Radio className="w-3.5 h-3.5 text-amber-300" />
-              <span>95.0 FM BULAWAYO</span>
-            </span>
-            <span className="hidden md:inline text-white/85 italic font-medium">
-              &ldquo;{contacts.slogan}&rdquo;
-            </span>
-            <span className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/20 text-white/95 font-medium">
-              On Air:{" "}
-              <strong className="text-amber-200">{currentShow.title}</strong> (
-              {currentShow.presenter})
-            </span>
+    <header className="sticky top-0 z-50 shadow-md bg-white">
+      {/* Original Khulumani FM Top DEDICATIONS Ticker Strip */}
+      <div className="bg-white border-b border-khulumani-border text-xs">
+        <div className="max-w-7xl mx-auto pr-4 sm:pr-6 lg:pr-8 h-10 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="bg-[#0e9384] text-white font-black uppercase tracking-wider pl-4 pr-7 py-2.5 clip-dedications-ribbon inline-flex items-center gap-2 shrink-0">
+              <Volume2 className="w-3.5 h-3.5" />
+              <span>DEDICATIONS</span>
+            </div>
+            <p className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-khulumani-muted truncate">
+              CURRENTLY THERE ARE NO NEW DEDICATIONS • ON AIR:{" "}
+              <span className="text-khulumani-greenDark">
+                {currentShow.title} ({currentShow.presenter})
+              </span>
+            </p>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
             <a
               href={`tel:${contacts.phone.replace(/\s+/g, "")}`}
-              className="hidden sm:inline-flex items-center gap-1 text-white/90 hover:text-white font-medium"
+              className="hidden lg:inline-flex items-center gap-1 text-khulumani-ink hover:text-khulumani-green font-bold"
             >
-              <Phone className="w-3 h-3" />
+              <Phone className="w-3.5 h-3.5 text-khulumani-green" />
               <span>{contacts.phone}</span>
             </a>
-            <div className="flex items-center gap-1.5 font-mono font-semibold bg-black/20 px-2.5 py-0.5 rounded">
-              <Clock className="w-3 h-3 text-amber-300" />
+            <div className="hidden sm:flex items-center gap-1.5 font-mono font-bold bg-khulumani-greenLight text-khulumani-greenDark px-2.5 py-1 rounded">
+              <Clock className="w-3.5 h-3.5 text-khulumani-green" />
               <span>{timeString}</span>
             </div>
             <Link
               href="/crm"
-              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-black/25 hover:bg-black/40 text-amber-200 font-bold transition-colors"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-khulumani-greenDark hover:bg-khulumani-green text-white font-extrabold transition-colors"
             >
-              <ShieldCheck className="w-3 h-3" />
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
               <span>{sessionUser ? "CRM Studio" : "CRM Login"}</span>
             </Link>
           </div>
@@ -105,7 +103,7 @@ export function Header() {
 
           {/* Desktop Navigation Links */}
           <nav
-            className="hidden md:flex items-center gap-1 lg:gap-2"
+            className="hidden md:flex items-center gap-1 lg:gap-3 h-full"
             aria-label="Main Navigation"
           >
             {NAV_ITEMS.map((item) => {
@@ -117,10 +115,10 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
+                  className={`px-3 h-full inline-flex items-center text-xs lg:text-sm font-black tracking-wider border-b-4 transition-all ${
                     active
-                      ? "bg-khulumani-green text-white shadow-sm shadow-khulumani-green/25"
-                      : "text-khulumani-ink hover:bg-khulumani-greenLight hover:text-khulumani-greenDark"
+                      ? "border-khulumani-green text-khulumani-greenDark"
+                      : "border-transparent text-khulumani-ink hover:text-khulumani-green hover:border-khulumani-green/40"
                   }`}
                 >
                   {item.label}
@@ -129,8 +127,38 @@ export function Header() {
             })}
           </nav>
 
-          {/* Live Stream Quick Button & Mobile Menu Trigger */}
-          <div className="flex items-center gap-2.5">
+          {/* Social Links & Live Stream Quick Button */}
+          <div className="flex items-center gap-2">
+            <div className="hidden xl:flex items-center gap-1.5 mr-1">
+              <a
+                href={contacts.socials.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Khulumani FM Facebook"
+                className="w-8 h-8 rounded-full bg-khulumani-green hover:bg-khulumani-greenDark text-white flex items-center justify-center text-xs font-black transition-colors"
+              >
+                f
+              </a>
+              <a
+                href={contacts.socials.x}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Khulumani FM X"
+                className="w-8 h-8 rounded-full bg-khulumani-green hover:bg-khulumani-greenDark text-white flex items-center justify-center text-xs font-black transition-colors"
+              >
+                𝕏
+              </a>
+              <a
+                href={contacts.socials.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Khulumani FM Instagram"
+                className="w-8 h-8 rounded-full bg-khulumani-green hover:bg-khulumani-greenDark text-white flex items-center justify-center text-xs font-black transition-colors"
+              >
+                IG
+              </a>
+            </div>
+
             <button
               type="button"
               onClick={togglePlay}
