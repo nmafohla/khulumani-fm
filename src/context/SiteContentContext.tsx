@@ -90,48 +90,29 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
   const refreshCmsState = useCallback(async () => {
     setIsCheckingAuth(true);
     try {
-      const sessionRes = await fetch("/api/auth/session", {
+      const res = await fetch("/api/cms/content", {
         credentials: "include",
         cache: "no-store",
       });
-      const sessionData = sessionRes.ok
-        ? ((await sessionRes.json()) as {
-            authenticated: boolean;
-            user: CmsSessionUser | null;
-          })
-        : { authenticated: false, user: null };
-
-      if (sessionData.authenticated) {
-        const cmsRes = await fetch("/api/cms/content?mode=cms", {
-          credentials: "include",
-          cache: "no-store",
-        });
-        if (cmsRes.ok) {
-          const data = (await cmsRes.json()) as {
-            snapshot: CmsSnapshot;
-            user: CmsSessionUser;
-          };
-          setSessionUser(data.user);
-          applySnapshot(data.snapshot);
-          setIsCheckingAuth(false);
-          return;
-        }
-      }
-
-      setSessionUser(null);
-      setIsPreviewModeState(false);
-
-      const pubRes = await fetch("/api/cms/content", { cache: "no-store" });
-      if (pubRes.ok) {
-        const pubData = (await pubRes.json()) as {
+      if (res.ok) {
+        const data = (await res.json()) as {
           published: SiteContentPayload;
           publishedVersion: number;
           lastPublishedAt: string;
+          snapshot?: CmsSnapshot;
+          user?: CmsSessionUser | null;
         };
-        setPublishedContent(pubData.published);
-        setDraftContent(pubData.published);
-        setPublishedVersion(pubData.publishedVersion);
-        setLastPublishedAt(pubData.lastPublishedAt);
+        if (data.user && data.snapshot) {
+          setSessionUser(data.user);
+          applySnapshot(data.snapshot);
+          return;
+        }
+        setSessionUser(null);
+        setIsPreviewModeState(false);
+        setPublishedContent(data.published);
+        setDraftContent(data.published);
+        setPublishedVersion(data.publishedVersion);
+        setLastPublishedAt(data.lastPublishedAt);
       }
     } catch {
       try {

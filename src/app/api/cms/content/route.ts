@@ -40,8 +40,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const mode = request.nextUrl.searchParams.get("mode");
     const snapshot = getCmsSnapshot();
 
+    const user = requireServerRole(request, ["admin", "editor"]);
+
     if (mode === "cms") {
-      const user = requireServerRole(request, ["admin", "editor"]);
       if (!user) {
         return NextResponse.json(
           { error: "Authentication required to access CRM draft state." },
@@ -55,6 +56,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       published: snapshot.published,
       publishedVersion: snapshot.publishedVersion,
       lastPublishedAt: snapshot.lastPublishedAt,
+      ...(user ? { snapshot, user } : { user: null }),
     });
   } catch (err: unknown) {
     return createSafeErrorResponse("GET /api/cms/content", err);
