@@ -202,10 +202,10 @@ export default function CrmStudioPage() {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all ${
+              className={`min-h-[44px] inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold apple-spring active:scale-[0.96] ${
                 active
-                  ? "bg-khulumani-green text-white shadow-sm"
-                  : "text-khulumani-ink hover:bg-khulumani-greenLight"
+                  ? "bg-[#119e45] text-white shadow-sm"
+                  : "text-[#141414] hover:bg-khulumani-greenLight"
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -270,13 +270,13 @@ export default function CrmStudioPage() {
             <button
               type="button"
               onClick={() => void handleSaveDraft()}
-              className="px-4 py-2.5 rounded-xl bg-khulumani-greenLight text-khulumani-greenDark text-xs font-extrabold hover:bg-khulumani-green hover:text-white transition-colors"
+              className="min-h-[44px] px-4 py-2.5 rounded-xl bg-khulumani-greenLight text-[#141414] text-xs font-extrabold hover:bg-[#141414] hover:text-white apple-spring active:scale-[0.96]"
             >
               Save Draft
             </button>
             <button
               type="submit"
-              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-khulumani-green text-white text-xs font-extrabold hover:bg-khulumani-greenDark shadow-sm"
+              className="min-h-[44px] inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-[#119e45] text-white text-xs font-extrabold hover:bg-[#0d7e36] shadow-sm apple-spring active:scale-[0.96]"
             >
               <Eye className="w-4 h-4" />
               <span>Save &amp; Preview Changes</span>

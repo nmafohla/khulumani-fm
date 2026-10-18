@@ -56,25 +56,25 @@ export function PreviewModeBar() {
   };
 
   return (
-    <div className="sticky top-0 z-[60] bg-gradient-to-r from-amber-500 via-khulumani-tangelo to-khulumani-greenDark text-white shadow-xl border-b-2 border-white/30">
+    <div className="sticky top-0 z-[60] bg-[#141414]/95 backdrop-blur-2xl text-white shadow-xl border-b-2 border-[#119e45]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-3">
         {/* Left: Status Badge & Mode Toggle */}
         <div className="flex flex-wrap items-center gap-2.5">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/30 text-amber-200 text-xs font-black uppercase tracking-wider">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#119e45]/20 border border-[#119e45]/50 text-[#4ade80] text-xs font-black uppercase tracking-wider">
             <Eye className="w-3.5 h-3.5" />
             {previewComparisonMode === "draft"
               ? "Previewing Unpublished Draft"
               : `Comparing Live Site (v${publishedVersion})`}
           </span>
 
-          <div className="inline-flex rounded-xl bg-black/25 p-0.5 border border-white/20">
+          <div className="inline-flex rounded-xl bg-black/50 p-0.5 border border-white/15">
             <button
               type="button"
               onClick={() => setPreviewComparisonMode("draft")}
-              className={`px-2.5 py-1 rounded-lg text-xs font-extrabold transition-colors ${
+              className={`min-h-[34px] px-2.5 py-1 rounded-lg text-xs font-extrabold transition-colors ${
                 previewComparisonMode === "draft"
-                  ? "bg-white text-khulumani-greenDark shadow-sm"
-                  : "text-white/85 hover:text-white"
+                  ? "bg-[#119e45] text-white shadow-sm"
+                  : "text-white/80 hover:text-white"
               }`}
             >
               Draft Preview
@@ -82,10 +82,10 @@ export function PreviewModeBar() {
             <button
               type="button"
               onClick={() => setPreviewComparisonMode("published")}
-              className={`px-2.5 py-1 rounded-lg text-xs font-extrabold transition-colors ${
+              className={`min-h-[34px] px-2.5 py-1 rounded-lg text-xs font-extrabold transition-colors ${
                 previewComparisonMode === "published"
-                  ? "bg-white text-khulumani-greenDark shadow-sm"
-                  : "text-white/85 hover:text-white"
+                  ? "bg-[#119e45] text-white shadow-sm"
+                  : "text-white/80 hover:text-white"
               }`}
             >
               Current Live
@@ -93,7 +93,7 @@ export function PreviewModeBar() {
           </div>
 
           {publishNotice && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-900/80 text-emerald-200 text-xs font-bold">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#119e45] text-white text-xs font-bold">
               <CheckCircle2 className="w-3.5 h-3.5" />
               {publishNotice}
             </span>
@@ -101,7 +101,7 @@ export function PreviewModeBar() {
         </div>
 
         {/* Center: Page Switcher */}
-        <div className="hidden xl:flex items-center gap-1 bg-black/20 px-2 py-1 rounded-xl">
+        <div className="hidden xl:flex items-center gap-1 bg-white/5 border border-white/10 px-2 py-1 rounded-xl">
           <span className="text-[11px] font-bold text-white/75 px-1.5">
             Preview Tab:
           </span>
@@ -113,7 +113,7 @@ export function PreviewModeBar() {
                 href={link.href}
                 className={`px-2.5 py-1 rounded-lg text-xs font-extrabold transition-colors ${
                   active
-                    ? "bg-white text-khulumani-greenDark"
+                    ? "bg-[#119e45] text-white"
                     : "text-white/90 hover:bg-white/15"
                 }`}
               >
@@ -127,7 +127,7 @@ export function PreviewModeBar() {
         <div className="flex items-center gap-2">
           <Link
             href="/crm"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/30 hover:bg-black/45 text-white text-xs font-extrabold transition-colors"
+            className="min-h-[40px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-extrabold apple-spring active:scale-[0.96]"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to CRM Editor</span>
@@ -137,10 +137,10 @@ export function PreviewModeBar() {
             type="button"
             onClick={() => void handlePublishNow()}
             disabled={isPublishing || !hasUnpublishedChanges}
-            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black shadow-md transition-all ${
+            className={`min-h-[40px] inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black shadow-md apple-spring active:scale-[0.96] ${
               hasUnpublishedChanges
-                ? "bg-white text-khulumani-greenDark hover:bg-amber-200"
-                : "bg-white/40 text-white/80 cursor-not-allowed"
+                ? "bg-[#119e45] hover:bg-[#0d7e36] text-white"
+                : "bg-white/20 text-white/60 cursor-not-allowed"
             }`}
           >
             {isPublishing ? (
@@ -158,7 +158,7 @@ export function PreviewModeBar() {
           <button
             type="button"
             onClick={() => setIsPreviewMode(false)}
-            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-black/25 hover:bg-black/40 text-white/90 text-xs font-bold"
+            className="min-h-[40px] inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-red-600/80 text-white text-xs font-bold apple-spring active:scale-[0.96]"
             title="Exit Preview Mode"
           >
             <XCircle className="w-3.5 h-3.5" />

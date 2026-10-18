@@ -3,7 +3,17 @@
 import type { StationContactsContent, StationHeroContent } from "@/types/radio";
 
 export const AVAILABLE_STUDIO_IMAGES = [
+  {
+    label: "Khulumani Logo Bulawayo Skyline Studio",
+    value: "/images/apple-radio-hero.webp",
+  },
+  {
+    label: "Khulumani Logo Broadcast Platter Disc",
+    value: "/images/afro-pulse-disc.webp",
+  },
   { label: "Cde Phil Studio Poster", value: "/images/cde-phil.jpg" },
+  { label: "Black D Studio Poster", value: "/images/black-d.jpg" },
+  { label: "Sibonginkosi Tracy Poster", value: "/images/tracy-poster.jpg" },
   { label: "Morning After Host Poster", value: "/images/studio-host-1.png" },
   { label: "Montrose Live Roundtable", value: "/images/post-1.jpg" },
   { label: "Master Mixing Console", value: "/images/post-2.jpg" },

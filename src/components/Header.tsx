@@ -16,6 +16,12 @@ import {
 import { getBulawayoTime } from "@/lib/schedule";
 import { useRadio } from "@/context/RadioPlayerContext";
 import { useSiteContent } from "@/context/SiteContentContext";
+import {
+  FacebookBrandIcon,
+  XBrandIcon,
+  InstagramBrandIcon,
+  TikTokBrandIcon,
+} from "@/components/SocialBrandIcons";
 
 const NAV_ITEMS = [
   { href: "/", label: "HOME" },
@@ -44,6 +50,29 @@ export function Header() {
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  const socialItems = [
+    {
+      href: contacts.socials.facebook,
+      label: "Khulumani FM Facebook",
+      Icon: FacebookBrandIcon,
+    },
+    {
+      href: contacts.socials.x,
+      label: "Khulumani FM X (Twitter)",
+      Icon: XBrandIcon,
+    },
+    {
+      href: contacts.socials.instagram,
+      label: "Khulumani FM Instagram",
+      Icon: InstagramBrandIcon,
+    },
+    {
+      href: contacts.socials.tiktok,
+      label: "Khulumani FM TikTok",
+      Icon: TikTokBrandIcon,
+    },
+  ];
 
   return (
     <header className="sticky top-0 z-50 shadow-md bg-white">
@@ -130,33 +159,19 @@ export function Header() {
           {/* Social Links & Live Stream Quick Button */}
           <div className="flex items-center gap-2">
             <div className="hidden xl:flex items-center gap-1.5 mr-1">
-              <a
-                href={contacts.socials.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Khulumani FM Facebook"
-                className="w-9 h-9 rounded-full bg-[#119e45] hover:bg-[#141414] text-white flex items-center justify-center text-xs font-black transition-colors"
-              >
-                f
-              </a>
-              <a
-                href={contacts.socials.x}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Khulumani FM X"
-                className="w-9 h-9 rounded-full bg-[#119e45] hover:bg-[#141414] text-white flex items-center justify-center text-xs font-black transition-colors"
-              >
-                𝕏
-              </a>
-              <a
-                href={contacts.socials.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Khulumani FM Instagram"
-                className="w-9 h-9 rounded-full bg-[#119e45] hover:bg-[#141414] text-white flex items-center justify-center text-xs font-black transition-colors"
-              >
-                IG
-              </a>
+              {socialItems.map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  title={label}
+                  className="w-10 h-10 rounded-full bg-[#119e45] hover:bg-[#141414] text-white flex items-center justify-center shadow-sm apple-spring active:scale-[0.92]"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
             </div>
 
             <button
@@ -184,7 +199,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
-              className="md:hidden p-2.5 rounded-xl border border-khulumani-border text-khulumani-ink hover:bg-khulumani-greenLight"
+              className="md:hidden w-11 h-11 rounded-xl border border-khulumani-border text-khulumani-ink hover:bg-khulumani-greenLight flex items-center justify-center apple-spring active:scale-[0.94]"
               aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? (
@@ -199,7 +214,7 @@ export function Header() {
         {/* Mobile Drawer */}
         {mobileMenuOpen && (
           <nav
-            className="md:hidden border-t border-khulumani-border bg-white px-4 py-3 space-y-1"
+            className="md:hidden border-t border-khulumani-border bg-white px-4 py-3 space-y-1.5"
             aria-label="Mobile Navigation"
           >
             {NAV_ITEMS.map((item) => {
@@ -214,8 +229,8 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`block px-4 py-2.5 rounded-xl text-sm font-bold ${
                     active
-                      ? "bg-khulumani-green text-white"
-                      : "text-khulumani-ink hover:bg-khulumani-greenLight"
+                      ? "bg-[#119e45] text-white"
+                      : "text-[#141414] hover:bg-khulumani-greenLight"
                   }`}
                 >
                   {item.label}
@@ -225,10 +240,24 @@ export function Header() {
             <Link
               href="/crm"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-4 py-2.5 rounded-xl text-sm font-bold text-khulumani-greenDark bg-khulumani-greenLight"
+              className="block px-4 py-2.5 rounded-xl text-sm font-bold text-[#141414] bg-khulumani-greenLight"
             >
               {sessionUser ? "Open CRM Studio" : "Studio CRM Login"}
             </Link>
+            <div className="pt-2 flex items-center gap-2">
+              {socialItems.map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-11 h-11 rounded-full bg-[#119e45] hover:bg-[#141414] text-white flex items-center justify-center apple-spring active:scale-[0.92]"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
           </nav>
         )}
       </div>

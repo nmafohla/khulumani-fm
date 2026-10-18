@@ -49,20 +49,44 @@ export function CrmLoginCard({ onLoginSuccess }: CrmLoginCardProps) {
   };
 
   return (
-    <div className="max-w-md mx-auto my-12 px-4">
-      <div className="rounded-3xl bg-white border-2 border-khulumani-border shadow-xl overflow-hidden">
-        <div className="bg-gradient-to-r from-khulumani-greenDark via-khulumani-green to-khulumani-teal p-6 sm:p-8 text-white">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/25 text-amber-300 text-xs font-extrabold uppercase tracking-wider mb-3">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            Montrose Broadcast CRM
+    <div className="max-w-lg mx-auto my-10 px-4">
+      <div className="rounded-[32px] bg-white border-2 border-[#141414] shadow-2xl overflow-hidden">
+        {/* Khulumani Logo-Matched Skyline Studio Header */}
+        <div className="relative bg-[#0c120e] p-6 sm:p-8 text-white overflow-hidden border-b-4 border-[#119e45]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/apple-radio-hero.webp"
+            alt="Khulumani FM 95.0 Bulawayo Skyline Studio"
+            width={640}
+            height={360}
+            className="absolute inset-0 w-full h-full object-cover opacity-35"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0c120e] via-[#0c120e]/80 to-transparent" />
+
+          <div className="relative z-10 flex items-center justify-between gap-4 mb-4">
+            <div className="px-3.5 py-2 rounded-2xl bg-white shadow-md">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/logo.png"
+                alt="Khulumani FM 95.0 Logo"
+                width={116}
+                height={60}
+                className="h-10 w-auto object-contain"
+              />
+            </div>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#119e45] text-white text-xs font-black uppercase tracking-wider">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              Studio CRM
+            </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
-            Studio Content Login
+
+          <h1 className="relative z-10 text-2xl sm:text-3xl font-black tracking-tight text-white">
+            Montrose Broadcast CRM
           </h1>
-          <p className="text-xs sm:text-sm text-white/90 mt-1.5 leading-relaxed">
-            Sign in with your authorized Khulumani FM 95.0 administrator
-            credentials to update schedules, charts, news, and preview changes
-            before publishing live.
+          <p className="relative z-10 text-xs sm:text-sm text-white/85 mt-1.5 leading-relaxed">
+            Sign in with your Khulumani FM 95.0 credentials to update schedules,
+            charts, personalities, and news, and preview changes before
+            publishing live.
           </p>
         </div>
 
@@ -92,7 +116,7 @@ export function CrmLoginCard({ onLoginSuccess }: CrmLoginCardProps) {
             <div>
               <label
                 htmlFor="crm-email"
-                className="block text-xs font-extrabold uppercase tracking-wider text-khulumani-ink mb-1"
+                className="block text-xs font-black uppercase tracking-wider text-[#141414] mb-1.5"
               >
                 Studio Admin Email *
               </label>
@@ -113,7 +137,7 @@ export function CrmLoginCard({ onLoginSuccess }: CrmLoginCardProps) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="studio@khulumanifm.co.zw"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-khulumani-bg border border-khulumani-border text-sm text-khulumani-ink focus:outline-none focus:border-khulumani-green"
+                  className="w-full min-h-[48px] pl-10 pr-4 py-3 rounded-2xl bg-khulumani-bg border border-khulumani-border text-base sm:text-sm text-[#141414] focus:outline-none focus:border-[#119e45]"
                 />
               </div>
             </div>
@@ -121,7 +145,7 @@ export function CrmLoginCard({ onLoginSuccess }: CrmLoginCardProps) {
             <div>
               <label
                 htmlFor="crm-password"
-                className="block text-xs font-extrabold uppercase tracking-wider text-khulumani-ink mb-1"
+                className="block text-xs font-black uppercase tracking-wider text-[#141414] mb-1.5"
               >
                 Password *
               </label>
@@ -139,7 +163,7 @@ export function CrmLoginCard({ onLoginSuccess }: CrmLoginCardProps) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your studio password"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-khulumani-bg border border-khulumani-border text-sm text-khulumani-ink focus:outline-none focus:border-khulumani-green"
+                  className="w-full min-h-[48px] pl-10 pr-4 py-3 rounded-2xl bg-khulumani-bg border border-khulumani-border text-base sm:text-sm text-[#141414] focus:outline-none focus:border-[#119e45]"
                 />
               </div>
             </div>
@@ -147,7 +171,7 @@ export function CrmLoginCard({ onLoginSuccess }: CrmLoginCardProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 px-6 rounded-2xl bg-khulumani-green hover:bg-khulumani-greenDark text-white text-sm font-extrabold shadow-md shadow-khulumani-green/25 transition-all flex items-center justify-center gap-2 disabled:opacity-60"
+              className="w-full min-h-[52px] py-3.5 px-6 rounded-2xl bg-[#119e45] hover:bg-[#141414] text-white text-sm font-black uppercase tracking-wider shadow-lg apple-spring active:scale-[0.96] flex items-center justify-center gap-2 disabled:opacity-60"
             >
               {isSubmitting ? (
                 <>
