@@ -116,30 +116,19 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
         };
         if (data.user && data.snapshot) {
           setSessionUser(data.user);
-          const chosen =
-            cachedSnapshot &&
-            (cachedSnapshot.publishedVersion > data.snapshot.publishedVersion ||
-              cachedSnapshot.lastSavedDraftAt > data.snapshot.lastSavedDraftAt)
-              ? cachedSnapshot
-              : data.snapshot;
-          applySnapshot(chosen);
+          applySnapshot(data.snapshot);
           return;
         }
         setSessionUser(null);
         setIsPreviewModeState(false);
-        if (
-          cachedSnapshot &&
-          cachedSnapshot.publishedVersion > data.publishedVersion
-        ) {
-          applySnapshot(cachedSnapshot);
-          return;
-        }
+        // Server response is always the single source of truth for public visitors
         setPublishedContent(data.published);
         setDraftContent(data.published);
         setPublishedVersion(data.publishedVersion);
         setLastPublishedAt(data.lastPublishedAt);
       }
     } catch {
+      // Offline fallback only when network request fails
       if (cachedSnapshot) applySnapshot(cachedSnapshot);
     } finally {
       setIsCheckingAuth(false);

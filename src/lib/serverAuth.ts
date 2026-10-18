@@ -49,19 +49,31 @@ export function resetRateLimitsForTests(): void {
 }
 
 /**
- * Extracts client IP address for rate-limiting.
+ * Extracts client IP address for rate-limiting securely using trusted edge headers.
  */
 export function getClientIp(request: NextRequest): string {
+  const realIp =
+    request.headers.get("x-real-ip") || request.headers.get("x-vercel-ip");
+  if (realIp) return realIp.trim();
+
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) {
-    const first = forwarded.split(",")[0]?.trim();
-    if (first) return first;
+    const parts = forwarded
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const trustedIp = parts[parts.length - 1];
+    if (trustedIp) return trustedIp;
   }
   return "127.0.0.1";
 }
 
+// Constant dummy hash to maintain identical response time on non-matching email lookups
+const DUMMY_BCRYPT_HASH =
+  "$2a$12$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy";
+
 /**
- * Verifies admin credentials strictly on the server using bcrypt.
+ * Verifies admin credentials strictly on the server using constant-time comparison and bcrypt.
  */
 export async function verifyAdminCredentials(
   emailInput: string,
@@ -71,12 +83,19 @@ export async function verifyAdminCredentials(
   const normalizedInput = emailInput.trim().toLowerCase();
   const normalizedAdmin = config.adminEmail.trim().toLowerCase();
 
-  if (normalizedInput !== normalizedAdmin) {
-    return null;
-  }
+  // Equalize string lengths for timingSafeEqual
+  const maxLen = Math.max(normalizedInput.length, normalizedAdmin.length, 64);
+  const inputBuf = Buffer.from(normalizedInput.padEnd(maxLen, " "), "utf8");
+  const adminBuf = Buffer.from(normalizedAdmin.padEnd(maxLen, " "), "utf8");
+  const isEmailMatch = crypto.timingSafeEqual(inputBuf, adminBuf);
 
-  const isValid = await bcrypt.compare(passwordInput, config.adminPasswordHash);
-  if (!isValid) {
+  // Always compute bcrypt to prevent user enumeration via response timing side-channel
+  const targetHash = isEmailMatch
+    ? config.adminPasswordHash
+    : DUMMY_BCRYPT_HASH;
+  const isPasswordValid = await bcrypt.compare(passwordInput, targetHash);
+
+  if (!isEmailMatch || !isPasswordValid) {
     return null;
   }
 

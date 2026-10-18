@@ -164,4 +164,16 @@ describe("CRM Draft, Pre-Publish Preview & Publish Workflow", () => {
       DEFAULT_SITE_CONTENT.contacts.heroTitle
     );
   });
+
+  it("strictly rejects non-https and javascript: URLs on contact channels", () => {
+    const maliciousPayload = {
+      ...DEFAULT_SITE_CONTENT,
+      contacts: {
+        ...DEFAULT_SITE_CONTENT.contacts,
+        whatsappUrl: "javascript:alert(document.cookie)",
+      },
+    };
+    const parsed = siteContentPayloadSchema.safeParse(maliciousPayload);
+    expect(parsed.success).toBe(false);
+  });
 });
