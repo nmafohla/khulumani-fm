@@ -126,3 +126,80 @@ body {
 .clip-dedications-ribbon {
   clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
 }
+
+/* Apple Fluid Interface & HIG Motion Standards */
+:root {
+  --apple-spring: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+button,
+a,
+input[type="range"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.apple-spring {
+  transition-timing-function: var(--apple-spring);
+  transition-duration: 380ms;
+}
+
+@keyframes appleSheetSlideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.apple-sheet-enter {
+  animation: appleSheetSlideUp 420ms var(--apple-spring) forwards;
+}
+
+@keyframes spinPlatter {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@property --animation-reduced {
+  syntax: "*";
+  inherits: false;
+  initial-value: none;
+}
+
+.animate-spin-slow {
+  animation: spinPlatter 18s linear infinite;
+  --animation-reduced: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin-slow,
+  .apple-sheet-enter {
+    animation: var(--animation-reduced) !important;
+  }
+}
+
+/* Soft edge horizontal content fade for Apple Radio Live Ribbon */
+.soft-edge-fade-x {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+}
