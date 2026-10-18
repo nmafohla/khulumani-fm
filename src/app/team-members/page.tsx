@@ -3,12 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Mic2, Clock, Radio, Search } from "lucide-react";
-import { TEAM_MEMBERS } from "@/lib/stationContent";
+import { useSiteContent } from "@/context/SiteContentContext";
 
 export default function TeamMembersPage() {
+  const { activeContent } = useSiteContent();
+  const team = activeContent.team;
   const [query, setQuery] = useState<string>("");
 
-  const filtered = TEAM_MEMBERS.filter((m) => {
+  const filtered = team.filter((m) => {
     const q = query.trim().toLowerCase();
     if (!q) return true;
     return (
@@ -20,9 +22,17 @@ export default function TeamMembersPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
-      {/* Page Hero Banner */}
-      <div className="rounded-3xl bg-gradient-to-r from-khulumani-greenDark via-khulumani-green to-khulumani-teal text-white p-8 sm:p-10 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div className="max-w-2xl">
+      {/* Page Hero Banner with Original Team Category Backdrop */}
+      <div className="relative rounded-3xl overflow-hidden bg-khulumani-greenDark text-white p-8 sm:p-10 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/team-banner.jpg"
+          alt="Khulumani FM Team Members and Presenters"
+          className="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-luminosity"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-khulumani-greenDark/95 via-khulumani-green/90 to-khulumani-teal/85" />
+
+        <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/20 text-amber-300 text-xs font-extrabold uppercase tracking-wider mb-3">
             <Mic2 className="w-3.5 h-3.5" />
             Izwi Lethu, Igugu Lethu • 95.0 FM
@@ -39,7 +49,7 @@ export default function TeamMembersPage() {
 
         <Link
           href="/shows-schedule"
-          className="px-5 py-3 rounded-2xl bg-white text-khulumani-greenDark font-extrabold text-sm shadow-md hover:bg-amber-300 transition-colors shrink-0"
+          className="relative z-10 px-5 py-3 rounded-2xl bg-white text-khulumani-greenDark font-extrabold text-sm shadow-md hover:bg-amber-300 transition-colors shrink-0"
         >
           View Show Schedule
         </Link>
@@ -54,12 +64,12 @@ export default function TeamMembersPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by presenter name or show (e.g., Khanyile, Jam & Toast)..."
+            aria-label="Search presenters"
             className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-khulumani-bg border border-khulumani-border text-sm text-khulumani-ink focus:outline-none focus:border-khulumani-green"
           />
         </div>
         <div className="text-xs font-bold text-khulumani-muted px-2">
-          Showing {filtered.length} of {TEAM_MEMBERS.length} On-Air
-          Personalities
+          Showing {filtered.length} of {team.length} On-Air Personalities
         </div>
       </div>
 
@@ -71,13 +81,12 @@ export default function TeamMembersPage() {
             className="rounded-3xl bg-white border border-khulumani-border overflow-hidden shadow-sm hover:shadow-md hover:border-khulumani-green transition-all flex flex-col justify-between group"
           >
             <div>
-              {/* Avatar / Banner Header */}
-              <div className="relative h-48 overflow-hidden bg-khulumani-greenDark">
+              <div className="relative h-56 overflow-hidden bg-khulumani-greenDark">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
                 <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between">
@@ -95,7 +104,6 @@ export default function TeamMembersPage() {
                 </div>
               </div>
 
-              {/* Content */}
               <div className="p-6">
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {member.shows.map((showTitle) => (

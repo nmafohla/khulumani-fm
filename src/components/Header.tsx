@@ -3,10 +3,19 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Clock, Phone, Play, Pause, Menu, X, Radio } from "lucide-react";
+import {
+  Clock,
+  Phone,
+  Play,
+  Pause,
+  Menu,
+  X,
+  Radio,
+  ShieldCheck,
+} from "lucide-react";
 import { getBulawayoTime } from "@/lib/schedule";
 import { useRadio } from "@/context/RadioPlayerContext";
-import { STATION_CONTACTS } from "@/lib/stationContent";
+import { useSiteContent } from "@/context/SiteContentContext";
 
 const NAV_ITEMS = [
   { href: "/", label: "Home" },
@@ -20,6 +29,8 @@ const NAV_ITEMS = [
 export function Header() {
   const pathname = usePathname();
   const { status, togglePlay, currentShow } = useRadio();
+  const { activeContent, sessionUser } = useSiteContent();
+  const contacts = activeContent.contacts;
   const isPlaying = status === "playing";
   const [timeString, setTimeString] = useState<string>("Loading CAT...");
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
@@ -45,7 +56,7 @@ export function Header() {
               <span>95.0 FM BULAWAYO</span>
             </span>
             <span className="hidden md:inline text-white/85 italic font-medium">
-              &ldquo;{STATION_CONTACTS.slogan}&rdquo;
+              &ldquo;{contacts.slogan}&rdquo;
             </span>
             <span className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/20 text-white/95 font-medium">
               On Air:{" "}
@@ -54,18 +65,25 @@ export function Header() {
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <a
-              href={`tel:${STATION_CONTACTS.phone.replace(/\s+/g, "")}`}
+              href={`tel:${contacts.phone.replace(/\s+/g, "")}`}
               className="hidden sm:inline-flex items-center gap-1 text-white/90 hover:text-white font-medium"
             >
               <Phone className="w-3 h-3" />
-              <span>{STATION_CONTACTS.phone}</span>
+              <span>{contacts.phone}</span>
             </a>
             <div className="flex items-center gap-1.5 font-mono font-semibold bg-black/20 px-2.5 py-0.5 rounded">
               <Clock className="w-3 h-3 text-amber-300" />
               <span>{timeString}</span>
             </div>
+            <Link
+              href="/crm"
+              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-black/25 hover:bg-black/40 text-amber-200 font-bold transition-colors"
+            >
+              <ShieldCheck className="w-3 h-3" />
+              <span>{sessionUser ? "CRM Studio" : "CRM Login"}</span>
+            </Link>
           </div>
         </div>
       </div>
@@ -114,6 +132,7 @@ export function Header() {
           {/* Live Stream Quick Button & Mobile Menu Trigger */}
           <div className="flex items-center gap-2.5">
             <button
+              type="button"
               onClick={togglePlay}
               className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-extrabold transition-all shadow-md active:scale-95 ${
                 isPlaying
@@ -135,6 +154,7 @@ export function Header() {
             </button>
 
             <button
+              type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               className="md:hidden p-2.5 rounded-xl border border-khulumani-border text-khulumani-ink hover:bg-khulumani-greenLight"
               aria-label="Toggle Menu"
@@ -174,6 +194,13 @@ export function Header() {
                 </Link>
               );
             })}
+            <Link
+              href="/crm"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-2.5 rounded-xl text-sm font-bold text-khulumani-greenDark bg-khulumani-greenLight"
+            >
+              {sessionUser ? "Open CRM Studio" : "Studio CRM Login"}
+            </Link>
           </nav>
         )}
       </div>

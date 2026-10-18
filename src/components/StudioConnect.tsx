@@ -9,9 +9,12 @@ import {
   Radio,
   ArrowRight,
 } from "lucide-react";
-import { STATION_CONTACTS } from "@/lib/stationContent";
+import { useSiteContent } from "@/context/SiteContentContext";
 
 export function StudioConnect() {
+  const { activeContent } = useSiteContent();
+  const contacts = activeContent.contacts;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* Studio Contact & WhatsApp Hotline */}
@@ -31,7 +34,7 @@ export function StudioConnect() {
 
           <div className="space-y-3 mt-6">
             <a
-              href={STATION_CONTACTS.whatsappUrl}
+              href={contacts.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-4 rounded-2xl bg-khulumani-greenLight hover:bg-khulumani-green border border-khulumani-green/30 text-khulumani-greenDark hover:text-white transition-all group"
@@ -43,7 +46,7 @@ export function StudioConnect() {
                     WhatsApp &amp; Studio Mobile
                   </div>
                   <div className="text-sm font-mono font-bold">
-                    {STATION_CONTACTS.mobile}
+                    {contacts.mobile}
                   </div>
                 </div>
               </div>
@@ -54,7 +57,7 @@ export function StudioConnect() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <a
-                href="tel:+263292472730"
+                href={`tel:${contacts.phone.replace(/\s+/g, "")}`}
                 className="flex items-center gap-3 p-3.5 rounded-2xl bg-khulumani-bg border border-khulumani-border hover:border-khulumani-green transition-colors"
               >
                 <Phone className="w-4 h-4 text-khulumani-green shrink-0" />
@@ -63,13 +66,13 @@ export function StudioConnect() {
                     Direct Studio Line
                   </div>
                   <div className="text-xs font-mono font-extrabold text-khulumani-ink">
-                    {STATION_CONTACTS.phone}
+                    {contacts.phone}
                   </div>
                 </div>
               </a>
 
               <a
-                href={`mailto:${STATION_CONTACTS.email}`}
+                href={`mailto:${contacts.email}`}
                 className="flex items-center gap-3 p-3.5 rounded-2xl bg-khulumani-bg border border-khulumani-border hover:border-khulumani-green transition-colors"
               >
                 <Mail className="w-4 h-4 text-khulumani-green shrink-0" />
@@ -78,7 +81,7 @@ export function StudioConnect() {
                     Official Email
                   </div>
                   <div className="text-xs font-extrabold text-khulumani-ink truncate">
-                    {STATION_CONTACTS.email}
+                    {contacts.email}
                   </div>
                 </div>
               </a>
@@ -105,17 +108,16 @@ export function StudioConnect() {
         <div>
           <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-khulumani-teal mb-2">
             <Radio className="w-4 h-4 text-khulumani-green" />
-            Izwi Lethu, Igugu Lethu
+            {contacts.slogan}
           </div>
           <h3 className="text-2xl font-black text-khulumani-ink">
-            About Khulumani FM 95.0
+            About {contacts.name}
           </h3>
           <p className="text-sm text-khulumani-muted mt-2 leading-relaxed">
             Khulumani FM is the leading community radio station for the youth
             and young at heart. Broadcasting from Montrose Studios in Bulawayo
-            under the Zimbabwe Broadcasting Corporation, the station educates,
-            entertains, and informs audiences through vibrant, music-driven
-            shows.
+            under {contacts.parentOrg}, the station educates, entertains, and
+            informs audiences through vibrant, music-driven shows.
           </p>
 
           <div className="grid grid-cols-2 gap-3 mt-6">
@@ -124,7 +126,7 @@ export function StudioConnect() {
                 FM Frequency
               </span>
               <span className="text-base font-black text-khulumani-ink">
-                95.0 MHz
+                {contacts.frequency}
               </span>
             </div>
             <div className="p-3.5 rounded-2xl bg-khulumani-greenLight/60 border border-khulumani-border">
@@ -157,7 +159,7 @@ export function StudioConnect() {
         <div className="mt-6 pt-4 border-t border-khulumani-border text-xs text-khulumani-muted flex items-center justify-between">
           <span className="inline-flex items-center gap-1.5 font-semibold">
             <MapPin className="w-3.5 h-3.5 text-khulumani-green" />
-            {STATION_CONTACTS.location}
+            {contacts.location}
           </span>
           <span className="font-extrabold text-khulumani-greenDark">
             ZBC Community Radio

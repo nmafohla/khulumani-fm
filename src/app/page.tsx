@@ -1,22 +1,47 @@
+"use client";
+
 import Link from "next/link";
-import { Trophy, Mic2, Newspaper, ArrowRight } from "lucide-react";
+import { Trophy, Mic2, Newspaper, ArrowRight, Megaphone } from "lucide-react";
 import { PlayerConsole } from "@/components/PlayerConsole";
 import { NowPlayingCard } from "@/components/NowPlayingCard";
 import { ScheduleSection } from "@/components/ScheduleSection";
 import { StudioConnect } from "@/components/StudioConnect";
-import {
-  TOP_CHART_TRACKS,
-  TEAM_MEMBERS,
-  NEWS_ARTICLES,
-} from "@/lib/stationContent";
+import { useSiteContent } from "@/context/SiteContentContext";
 
 export default function HomePage() {
-  const topFourTracks = TOP_CHART_TRACKS.slice(0, 4);
-  const featuredTeam = TEAM_MEMBERS.slice(0, 4);
-  const latestNews = NEWS_ARTICLES.slice(0, 2);
+  const { activeContent } = useSiteContent();
+  const topFourTracks = activeContent.charts.slice(0, 4);
+  const featuredTeam = activeContent.team.slice(0, 4);
+  const latestNews = activeContent.news.slice(0, 2);
+  const hero = activeContent.hero;
 
   return (
     <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-10 sm:space-y-12">
+      {/* Station Hero Banner & Broadcast Announcement */}
+      <section className="rounded-3xl bg-gradient-to-r from-khulumani-greenDark via-khulumani-green to-khulumani-teal text-white p-6 sm:p-8 shadow-lg flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div className="space-y-2 max-w-3xl">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/25 text-amber-300 text-xs font-extrabold uppercase tracking-wider">
+            <Megaphone className="w-3.5 h-3.5" />
+            {hero.badge}
+          </span>
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tight">
+            {hero.headline}
+          </h1>
+          <p className="text-xs sm:text-sm text-white/90 leading-relaxed">
+            {hero.subtitle}
+          </p>
+        </div>
+
+        <div className="p-4 rounded-2xl bg-black/20 border border-white/20 max-w-sm shrink-0">
+          <span className="text-[11px] font-black uppercase tracking-wider text-amber-300 block mb-1">
+            Studio Notice
+          </span>
+          <p className="text-xs font-semibold text-white/95 leading-relaxed">
+            {hero.announcement}
+          </p>
+        </div>
+      </section>
+
       {/* Signature Interactive Console */}
       <section aria-label="Audio Broadcast Player">
         <PlayerConsole />
@@ -125,7 +150,7 @@ export default function HomePage() {
                 href="/team-members"
                 className="text-xs font-extrabold text-khulumani-green hover:text-khulumani-greenDark inline-flex items-center gap-1"
               >
-                <span>All {TEAM_MEMBERS.length} Presenters</span>
+                <span>All {activeContent.team.length} Presenters</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -164,7 +189,7 @@ export default function HomePage() {
               href="/team-members"
               className="block w-full py-2.5 rounded-xl bg-khulumani-greenLight hover:bg-khulumani-green text-khulumani-greenDark hover:text-white text-center text-xs font-extrabold transition-colors"
             >
-              Meet All {TEAM_MEMBERS.length} Producers &amp; Presenters
+              Meet All {activeContent.team.length} Producers &amp; Presenters
             </Link>
           </div>
         </div>

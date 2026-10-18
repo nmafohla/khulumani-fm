@@ -10,22 +10,20 @@ import {
   Music,
   MessageSquare,
 } from "lucide-react";
-import { TOP_CHART_TRACKS, STATION_CONTACTS } from "@/lib/stationContent";
+import { useSiteContent } from "@/context/SiteContentContext";
 
 export default function ChartsPage() {
+  const { activeContent } = useSiteContent();
+  const tracks = activeContent.charts;
+  const contacts = activeContent.contacts;
+
   const [votedIds, setVotedIds] = useState<Record<number, boolean>>({});
-  const [voteCounts, setVoteCounts] = useState<Record<number, number>>(() => {
-    const initial: Record<number, number> = {};
-    for (const track of TOP_CHART_TRACKS) {
-      initial[track.position] = track.votes;
-    }
-    return initial;
-  });
+  const [voteOffsets, setVoteOffsets] = useState<Record<number, number>>({});
 
   const handleVote = (position: number) => {
     if (votedIds[position]) return;
     setVotedIds((prev) => ({ ...prev, [position]: true }));
-    setVoteCounts((prev) => ({
+    setVoteOffsets((prev) => ({
       ...prev,
       [position]: (prev[position] ?? 0) + 1,
     }));
@@ -34,8 +32,16 @@ export default function ChartsPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
       {/* Page Hero Banner */}
-      <div className="rounded-3xl bg-gradient-to-r from-khulumani-greenDark via-khulumani-green to-khulumani-teal text-white p-8 sm:p-10 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div className="max-w-2xl">
+      <div className="relative rounded-3xl overflow-hidden bg-khulumani-greenDark text-white p-8 sm:p-10 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/events-bg.jpg"
+          alt="Khulumani FM Live Music Chart Countdown"
+          className="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-luminosity"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-khulumani-greenDark/95 via-khulumani-green/90 to-khulumani-teal/85" />
+
+        <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/20 text-amber-300 text-xs font-extrabold uppercase tracking-wider mb-3">
             <Trophy className="w-3.5 h-3.5" />
             Official Station Countdown • 95.0 FM
@@ -51,10 +57,10 @@ export default function ChartsPage() {
         </div>
 
         <a
-          href={STATION_CONTACTS.whatsappUrl}
+          href={contacts.whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white text-khulumani-greenDark font-extrabold text-sm shadow-md hover:bg-amber-300 transition-colors shrink-0"
+          className="relative z-10 inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white text-khulumani-greenDark font-extrabold text-sm shadow-md hover:bg-amber-300 transition-colors shrink-0"
         >
           <MessageSquare className="w-4 h-4" />
           <span>Vote on WhatsApp</span>
@@ -69,7 +75,7 @@ export default function ChartsPage() {
               Top Week Chart 11
             </span>
             <h2 className="text-2xl font-black text-khulumani-ink mt-0.5">
-              This Week&apos;s Official Top 10
+              This Week&apos;s Official Top {tracks.length}
             </h2>
           </div>
           <span className="text-xs font-bold text-khulumani-muted">
@@ -78,9 +84,10 @@ export default function ChartsPage() {
         </div>
 
         <div className="divide-y divide-khulumani-border mt-4">
-          {TOP_CHART_TRACKS.map((track) => {
+          {tracks.map((track) => {
             const hasVoted = Boolean(votedIds[track.position]);
-            const currentVotes = voteCounts[track.position] ?? track.votes;
+            const currentVotes =
+              track.votes + (voteOffsets[track.position] ?? 0);
             const diff = track.previousPosition - track.position;
 
             return (
@@ -89,7 +96,6 @@ export default function ChartsPage() {
                 className="py-4 sm:py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-khulumani-bg/50 px-3 rounded-2xl transition-colors"
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  {/* Position Badge */}
                   <div
                     className={`w-12 h-12 rounded-2xl flex flex-col items-center justify-center shrink-0 font-black ${
                       track.position === 1
@@ -104,7 +110,6 @@ export default function ChartsPage() {
                     </span>
                   </div>
 
-                  {/* Cover Image */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={track.coverImage}
@@ -112,7 +117,6 @@ export default function ChartsPage() {
                     className="w-14 h-14 rounded-2xl object-cover border border-khulumani-border shrink-0"
                   />
 
-                  {/* Track Meta */}
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
                       {diff > 0 ? (
@@ -143,7 +147,6 @@ export default function ChartsPage() {
                   </div>
                 </div>
 
-                {/* Right: Votes & Action */}
                 <div className="flex items-center gap-4 self-end sm:self-center shrink-0">
                   <div className="text-right">
                     <div className="text-sm font-mono font-extrabold text-khulumani-ink">
@@ -155,6 +158,7 @@ export default function ChartsPage() {
                   </div>
 
                   <button
+                    type="button"
                     onClick={() => handleVote(track.position)}
                     disabled={hasVoted}
                     className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all ${

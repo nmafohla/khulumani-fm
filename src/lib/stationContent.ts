@@ -1,6 +1,23 @@
-import type { TeamMember, ChartTrack, NewsArticle } from "@/types/radio";
+import type {
+  TeamMember,
+  ChartTrack,
+  NewsArticle,
+  StationHeroContent,
+  StationContactsContent,
+  SiteContentPayload,
+} from "@/types/radio";
+import { KHULUMANI_SHOWS } from "@/lib/showsData";
 
-export const STATION_CONTACTS = {
+export const DEFAULT_HERO_CONTENT: StationHeroContent = {
+  badge: "Montrose Studios • Bulawayo, Zimbabwe",
+  headline: "Izwi Lethu, Igugu Lethu",
+  subtitle:
+    "Broadcasting 24/7 on 95.0 FM across Bulawayo and Matabeleland. Re-engineered for crystal-clear, uninterrupted live streaming with zero 5-minute audio dropouts.",
+  announcement:
+    "Live from Montrose Studios: Stream 95.0 FM non-stop, check the 7-day lineup, and vote on the Khulumani Top 10 Chart!",
+};
+
+export const STATION_CONTACTS: StationContactsContent = {
   name: "Khulumani FM 95.0",
   slogan: "Izwi Lethu, Igugu Lethu",
   parentOrg: "The Zimbabwe Broadcasting Corporation (ZBC)",
@@ -11,24 +28,27 @@ export const STATION_CONTACTS = {
   email: "khulumanifm@zbc.co.zw",
   location: "Montrose Studios, Bulawayo, Zimbabwe",
   frequency: "95.0 MHz FM",
+  heroTitle: "Contact Montrose Studios",
+  heroSubtitle:
+    "Seriously, we want to hear about you! Whether you have a song dedication, community notice, music submission, or advertising inquiry, reach out directly to our Bulawayo broadcast team.",
   socials: {
     facebook: "https://www.facebook.com/khulumanifm95.0",
     instagram: "https://www.instagram.com/khulumanifm95.0/",
     x: "https://x.com/khulumanifm95",
     tiktok: "https://www.tiktok.com/@khulumanifm95",
   },
-} as const;
+};
 
 export const TEAM_MEMBERS: readonly TeamMember[] = [
   {
     id: "philip",
     slug: "philip",
-    name: "Philip",
+    name: "Philip (Cde Phil)",
     role: "Producer / Presenter",
-    shows: ["Jam & Toast"],
+    shows: ["Jam & Toast", "Chuu! Nomphulaphuli"],
     scheduleSummary: "Monday to Friday • 6:00 am – 9:00 am",
-    bio: "Co-host of Bulawayo's flagship morning breakfast show Jam & Toast, waking up the City of Kings with news, current affairs, and infectious morning energy.",
-    image: "/images/chart-1.jpg",
+    bio: "Co-host of Bulawayo's flagship morning breakfast show Jam & Toast and Chuu! Nomphulaphuli, waking up the City of Kings with news, current affairs, and infectious energy.",
+    image: "/images/cde-phil.jpg",
   },
   {
     id: "joe",
@@ -38,7 +58,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = [
     shows: ["Jam & Toast"],
     scheduleSummary: "Monday to Friday • 6:00 am – 9:00 am",
     bio: "Co-host on Jam & Toast alongside Philip, delivering sharp sports updates, traffic reports, and morning banter every weekday.",
-    image: "/images/chart-2.jpg",
+    image: "/images/post-1.jpg",
   },
   {
     id: "khanyile",
@@ -49,7 +69,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = [
     scheduleSummary:
       "Mon, Wed, Fri (9:00 am – 12:00 pm) & Sun (8:00 am – 12:00 pm)",
     bio: "Host of the vibrant Chuu – Mid Morning Show, spotlighting community stories, lifestyle, youth empowerment, and Bulawayo arts.",
-    image: "/images/chart-3.jpg",
+    image: "/images/show-banner.jpg",
   },
   {
     id: "tracy",
@@ -60,7 +80,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = [
     scheduleSummary:
       "Tue & Thu (9:00 am – 12:00 pm) • Sat & Sun (12:00 pm – 4:00 pm)",
     bio: "Bringing warmth and energy to mid-mornings on Chuu and driving weekend afternoons on Koloi Yamonate.",
-    image: "/images/track-1.jpg",
+    image: "/images/post-2.jpg",
   },
   {
     id: "maria",
@@ -71,7 +91,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = [
     scheduleSummary:
       "Mon, Wed, Fri (12:00 pm – 3:00 pm) • Sat (4:00 am – 8:00 am)",
     bio: "Host of Koloi Yamonate on Mondays, Wednesdays, and Fridays, plus Saturday sunrise editions of Jam & Toast.",
-    image: "/images/track-2.jpg",
+    image: "/images/studio-host-1.png",
   },
   {
     id: "leonard",
@@ -82,7 +102,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = [
     scheduleSummary:
       "Tue & Thu (12:00 pm – 3:00 pm) • Sat & Sun (8:00 pm – 12:00 am)",
     bio: "Commanding midday airwaves on Koloi Yamonate and curating soulful weekend nights on the Pyjama Party.",
-    image: "/images/track-3.jpg",
+    image: "/images/post-3.jpg",
   },
   {
     id: "thorne",
@@ -154,7 +174,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = [
     shows: ["Indosakusa"],
     scheduleSummary: "Monday to Thursday • 3:00 am – 6:00 am",
     bio: "Guiding early risers across Matabeleland on Indosakusa (The Morning Star) with heritage wisdom and dawn melodies.",
-    image: "/images/chart-1.jpg",
+    image: "/images/post-1.jpg",
   },
   {
     id: "valentine",
@@ -165,7 +185,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = [
     scheduleSummary:
       "Mon, Wed, Fri (12:00 am – 3:00 am) & Sun (12:00 am – 4:00 am)",
     bio: "Keeping the midnight oil burning on The Morning After with smooth grooves and overnight shoutouts.",
-    image: "/images/chart-2.jpg",
+    image: "/images/studio-host-1.png",
   },
   {
     id: "vuyile",
@@ -176,7 +196,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = [
     scheduleSummary:
       "Tue, Thu, Sat (12:00 am – 4:00 am) & Fri (3:00 am – 6:00 am)",
     bio: "Commanding the overnight and Friday dawn airwaves on The Morning After and Indosakusa.",
-    image: "/images/chart-3.jpg",
+    image: "/images/post-2.jpg",
   },
 ];
 
@@ -282,7 +302,7 @@ export const NEWS_ARTICLES: readonly NewsArticle[] = [
     category: "Arts & Culture",
     date: "October 18, 2026",
     author: "Montrose News Desk",
-    image: "/images/show-banner.jpg",
+    image: "/images/post-1.jpg",
     excerpt:
       "Khulumani FM continues to champion local creatives across Matabeleland with live outside broadcasts, acoustic studio sessions, and youth talent interviews.",
     content:
@@ -296,7 +316,7 @@ export const NEWS_ARTICLES: readonly NewsArticle[] = [
     category: "Music & Charts",
     date: "October 15, 2026",
     author: "Music Department",
-    image: "/images/hero-bg.jpg",
+    image: "/images/post-2.jpg",
     excerpt:
       "Independent artists across Bulawayo, Gwanda, Plumtree, Hwange, and Victoria Falls are invited to submit mastered singles for rotation on 95.0 FM.",
     content:
@@ -310,7 +330,7 @@ export const NEWS_ARTICLES: readonly NewsArticle[] = [
     category: "Community",
     date: "October 11, 2026",
     author: "Events Team",
-    image: "/images/chart-1.jpg",
+    image: "/images/cde-phil.jpg",
     excerpt:
       "Meet your favourite presenters Philip, Joe, Maria, Khanyile, and Thorne in person as the 95.0 FM crew hits high-density suburbs and regional growth points.",
     content:
@@ -323,10 +343,19 @@ export const NEWS_ARTICLES: readonly NewsArticle[] = [
     category: "Youth Empowerment",
     date: "October 6, 2026",
     author: "Khanyile & Tracy",
-    image: "/images/chart-2.jpg",
+    image: "/images/post-3.jpg",
     excerpt:
       "Every weekday between 9:00 am and 12:00 pm, young entrepreneurs share practical insights on building sustainable enterprises in Bulawayo.",
     content:
       "Join Khanyile and Tracy on Chuu – Mid Morning Show for interactive Q&A sessions via WhatsApp (+263 713 200 366) featuring local innovators, vocational colleges, and business mentors.",
   },
 ];
+
+export const DEFAULT_SITE_CONTENT: SiteContentPayload = {
+  hero: DEFAULT_HERO_CONTENT,
+  contacts: STATION_CONTACTS,
+  shows: KHULUMANI_SHOWS,
+  charts: TOP_CHART_TRACKS,
+  team: TEAM_MEMBERS,
+  news: NEWS_ARTICLES,
+};

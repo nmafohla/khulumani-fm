@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Clock, Mic2, Radio, ArrowRight } from "lucide-react";
-import { DAY_NAMES, getShowsForDay, getBulawayoTime } from "@/lib/schedule";
+import { DAY_NAMES, getBulawayoTime } from "@/lib/schedule";
 import { useRadio } from "@/context/RadioPlayerContext";
+import { useSiteContent } from "@/context/SiteContentContext";
 
 interface ScheduleSectionProps {
   showViewAllLink?: boolean;
@@ -16,8 +17,11 @@ export function ScheduleSection({
   const { day: currentCatDay } = getBulawayoTime();
   const [selectedDay, setSelectedDay] = useState<number>(currentCatDay);
   const { currentShow } = useRadio();
+  const { activeContent } = useSiteContent();
 
-  const dayShows = getShowsForDay(selectedDay);
+  const dayShows = activeContent.shows
+    .filter((show) => show.days.includes(selectedDay))
+    .sort((a, b) => a.startHour - b.startHour);
 
   return (
     <div className="rounded-3xl bg-white border border-khulumani-border p-6 sm:p-8 shadow-sm">
@@ -41,6 +45,7 @@ export function ScheduleSection({
             return (
               <button
                 key={d.day}
+                type="button"
                 onClick={() => setSelectedDay(d.day)}
                 className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all ${
                   isSelected

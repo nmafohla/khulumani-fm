@@ -1,14 +1,27 @@
+"use client";
+
 import Link from "next/link";
 import { Calendar, Clock, Mic2, Radio } from "lucide-react";
 import { ScheduleSection } from "@/components/ScheduleSection";
-import { KHULUMANI_SHOWS } from "@/lib/schedule";
+import { useSiteContent } from "@/context/SiteContentContext";
 
 export default function ShowsSchedulePage() {
+  const { activeContent } = useSiteContent();
+  const shows = activeContent.shows;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
       {/* Page Hero Banner */}
-      <div className="rounded-3xl bg-gradient-to-r from-khulumani-greenDark via-khulumani-green to-khulumani-teal text-white p-8 sm:p-10 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div className="max-w-2xl">
+      <div className="relative rounded-3xl overflow-hidden bg-khulumani-greenDark text-white p-8 sm:p-10 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/post-2.jpg"
+          alt="Khulumani FM Broadcast Mixing Console"
+          className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-luminosity"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-khulumani-greenDark/95 via-khulumani-green/90 to-khulumani-teal/85" />
+
+        <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/20 text-amber-300 text-xs font-extrabold uppercase tracking-wider mb-3">
             <Calendar className="w-3.5 h-3.5" />
             24/7 Broadcast Lineup • 95.0 FM
@@ -25,7 +38,7 @@ export default function ShowsSchedulePage() {
 
         <Link
           href="/team-members"
-          className="px-5 py-3 rounded-2xl bg-white text-khulumani-greenDark font-extrabold text-sm shadow-md hover:bg-amber-300 transition-colors shrink-0"
+          className="relative z-10 px-5 py-3 rounded-2xl bg-white text-khulumani-greenDark font-extrabold text-sm shadow-md hover:bg-amber-300 transition-colors shrink-0"
         >
           Meet Our Personalities
         </Link>
@@ -46,12 +59,12 @@ export default function ShowsSchedulePage() {
             </h2>
           </div>
           <span className="text-xs font-bold text-khulumani-muted">
-            {KHULUMANI_SHOWS.length} Scheduled Editions
+            {shows.length} Scheduled Editions
           </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {KHULUMANI_SHOWS.map((show) => (
+          {shows.map((show) => (
             <div
               key={show.id}
               className="rounded-2xl bg-white border border-khulumani-border p-5 shadow-sm hover:border-khulumani-green transition-all flex flex-col justify-between"
