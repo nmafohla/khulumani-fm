@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #0d0f12;
-  --foreground: #f8fafc;
+  --background: #f6f9f7;
+  --foreground: #141f18;
 }
 
 body {
@@ -24,16 +24,16 @@ body {
 
 @keyframes pulseWave {
   0% {
-    transform: scaleY(0.2);
-    opacity: 0.35;
+    transform: scaleY(0.25);
+    opacity: 0.45;
   }
   50% {
     transform: scaleY(1);
     opacity: 1;
   }
   100% {
-    transform: scaleY(0.4);
-    opacity: 0.5;
+    transform: scaleY(0.45);
+    opacity: 0.65;
   }
 }
 
@@ -44,14 +44,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0d0f12;
+  background: #f6f9f7;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #232833;
+  background: #bdd6c5;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #f59e0b;
+  background: #1c9f56;
 }

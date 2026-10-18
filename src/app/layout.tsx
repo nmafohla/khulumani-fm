@@ -1,23 +1,27 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { RadioPlayerProvider } from "@/context/RadioPlayerContext";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { StickyPlayerBar } from "@/components/StickyPlayerBar";
 
 export const metadata: Metadata = {
-  title: "Khulumani FM 95.0 | Voice of the City of Kings & Queens",
+  title: "Khulumani FM 95.0 | Izwi Lethu, Igugu Lethu — Bulawayo",
   description:
-    "Listen live to Khulumani FM 95.0 from Bulawayo, Zimbabwe. High-fidelity 192kbps live radio stream, weekly show guide, and direct WhatsApp studio hotline.",
+    "Listen live to Khulumani FM 95.0 from Montrose Studios in Bulawayo, Zimbabwe. Uninterrupted 192kbps live radio stream, 7-day show schedule, charts, personalities, and studio contacts.",
   keywords: [
     "Khulumani FM",
     "95.0 FM",
+    "Izwi Lethu Igugu Lethu",
     "Bulawayo Radio",
     "Zimbabwe Broadcasting Corporation",
     "ZBC radio",
     "Live radio stream",
-    "Bulawayo music",
   ],
   openGraph: {
-    title: "Khulumani FM 95.0 — Live Online Radio",
+    title: "Khulumani FM 95.0 — Izwi Lethu, Igugu Lethu",
     description:
-      "The Voice of the City of Kings and Queens, Bulawayo, Zimbabwe.",
+      "The leading community radio station for the youth and young at heart in Bulawayo, Zimbabwe.",
     type: "website",
     locale: "en_ZW",
   },
@@ -29,16 +33,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
-        <meta name="theme-color" content="#0d0f12" />
-        <link
-          rel="icon"
-          href="https://www.khulumanifm.co.zw/wp-content/uploads/2021/10/cropped-favicon.png"
-        />
+        <meta name="theme-color" content="#1c9f56" />
+        <link rel="icon" href="/images/logo.png" />
       </head>
-      <body className="min-h-screen bg-station-dark text-slate-100 antialiased selection:bg-station-gold selection:text-station-dark">
-        {children}
+      <body className="min-h-screen flex flex-col bg-khulumani-bg text-khulumani-ink antialiased selection:bg-khulumani-green selection:text-white">
+        <RadioPlayerProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <StickyPlayerBar />
+        </RadioPlayerProvider>
       </body>
     </html>
   );

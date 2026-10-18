@@ -1,127 +1,167 @@
 "use client";
 
-import { MessageSquare, Phone, MapPin, Radio, Heart } from "lucide-react";
+import Link from "next/link";
+import {
+  MessageSquare,
+  Phone,
+  Mail,
+  MapPin,
+  Radio,
+  ArrowRight,
+} from "lucide-react";
+import { STATION_CONTACTS } from "@/lib/stationContent";
 
 export function StudioConnect() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* Studio Contact & WhatsApp Hotline */}
-      <div className="rounded-2xl bg-station-card border border-station-border p-6 sm:p-8 flex flex-col justify-between">
+      <div className="rounded-3xl bg-white border border-khulumani-border p-6 sm:p-8 shadow-sm flex flex-col justify-between">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-station-gold mb-3">
+          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-khulumani-green mb-2">
             <MessageSquare className="w-4 h-4" />
-            Connect With The On-Air Team
+            Connect With Montrose Studios
           </div>
-          <h3 className="text-xl font-black text-white">
-            Studio Hotline &amp; Shoutouts
+          <h3 className="text-2xl font-black text-khulumani-ink">
+            Studio Hotline &amp; Dedications
           </h3>
-          <p className="text-xs text-station-muted mt-2 leading-relaxed">
-            Send your music requests, community announcements, and studio
-            feedback directly to the presenters on duty.
+          <p className="text-sm text-khulumani-muted mt-2 leading-relaxed">
+            Send your song requests, birthday shoutouts, and community notices
+            directly to the presenters on air.
           </p>
 
           <div className="space-y-3 mt-6">
             <a
-              href="https://wa.me/263772123456?text=Hello%20Khulumani%20FM%2095.0%20Studio!%20Listening%20live%20from"
+              href={STATION_CONTACTS.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-400 transition-colors"
+              className="flex items-center justify-between p-4 rounded-2xl bg-khulumani-greenLight hover:bg-khulumani-green border border-khulumani-green/30 text-khulumani-greenDark hover:text-white transition-all group"
             >
               <div className="flex items-center gap-3">
-                <MessageSquare className="w-5 h-5 fill-current" />
+                <MessageSquare className="w-5 h-5 text-khulumani-green group-hover:text-white" />
                 <div>
-                  <div className="text-xs font-bold text-white">
-                    WhatsApp Studio Line
+                  <div className="text-xs font-extrabold">
+                    WhatsApp &amp; Studio Mobile
                   </div>
-                  <div className="text-[11px] text-emerald-300 font-mono">
-                    +263 77 212 3456
+                  <div className="text-sm font-mono font-bold">
+                    {STATION_CONTACTS.mobile}
                   </div>
                 </div>
               </div>
-              <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-500 text-station-dark">
-                Message
+              <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-khulumani-green text-white group-hover:bg-white group-hover:text-khulumani-greenDark">
+                Chat Now
               </span>
             </a>
 
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-station-dark border border-station-border/70 text-station-muted">
-              <Phone className="w-5 h-5 text-station-gold" />
-              <div>
-                <div className="text-xs font-bold text-white">
-                  Call-in Lines
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a
+                href="tel:+263292472730"
+                className="flex items-center gap-3 p-3.5 rounded-2xl bg-khulumani-bg border border-khulumani-border hover:border-khulumani-green transition-colors"
+              >
+                <Phone className="w-4 h-4 text-khulumani-green shrink-0" />
+                <div>
+                  <div className="text-[11px] font-bold text-khulumani-muted">
+                    Direct Studio Line
+                  </div>
+                  <div className="text-xs font-mono font-extrabold text-khulumani-ink">
+                    {STATION_CONTACTS.phone}
+                  </div>
                 </div>
-                <div className="text-[11px] font-mono text-station-muted">
-                  +263 29 271 000 / 272 000
+              </a>
+
+              <a
+                href={`mailto:${STATION_CONTACTS.email}`}
+                className="flex items-center gap-3 p-3.5 rounded-2xl bg-khulumani-bg border border-khulumani-border hover:border-khulumani-green transition-colors"
+              >
+                <Mail className="w-4 h-4 text-khulumani-green shrink-0" />
+                <div className="min-w-0">
+                  <div className="text-[11px] font-bold text-khulumani-muted">
+                    Official Email
+                  </div>
+                  <div className="text-xs font-extrabold text-khulumani-ink truncate">
+                    {STATION_CONTACTS.email}
+                  </div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-station-border/40 text-xs text-station-muted flex items-center justify-between">
-          <span>SMS Shoutouts: 33950</span>
-          <span>Bulawayo Central</span>
+        <div className="mt-6 pt-4 border-t border-khulumani-border flex items-center justify-between text-xs font-bold">
+          <span className="text-khulumani-muted">
+            Want to send a message online?
+          </span>
+          <Link
+            href="/contacts"
+            className="inline-flex items-center gap-1 text-khulumani-green hover:text-khulumani-greenDark font-extrabold"
+          >
+            <span>Open Contact Form</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       </div>
 
-      {/* Coverage & Transmission Info */}
-      <div className="rounded-2xl bg-gradient-to-br from-station-card to-station-dark border border-station-border p-6 sm:p-8 flex flex-col justify-between">
+      {/* Who We Are & Transmission Info */}
+      <div className="rounded-3xl bg-white border border-khulumani-border p-6 sm:p-8 shadow-sm flex flex-col justify-between">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-station-teal mb-3">
-            <Radio className="w-4 h-4" />
-            Frequency &amp; Transmission
+          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-khulumani-teal mb-2">
+            <Radio className="w-4 h-4 text-khulumani-green" />
+            Izwi Lethu, Igugu Lethu
           </div>
-          <h3 className="text-xl font-black text-white">
-            Montrose Transmission Tower
+          <h3 className="text-2xl font-black text-khulumani-ink">
+            About Khulumani FM 95.0
           </h3>
-          <p className="text-xs text-station-muted mt-2 leading-relaxed">
-            Khulumani FM operates from the Zimbabwe Broadcasting Corporation
-            Montrose Studios in Bulawayo, broadcasting on FM 95.0 MHz and
-            reaching listeners across Zimbabwe and the global diaspora online.
+          <p className="text-sm text-khulumani-muted mt-2 leading-relaxed">
+            Khulumani FM is the leading community radio station for the youth
+            and young at heart. Broadcasting from Montrose Studios in Bulawayo
+            under the Zimbabwe Broadcasting Corporation, the station educates,
+            entertains, and informs audiences through vibrant, music-driven
+            shows.
           </p>
 
           <div className="grid grid-cols-2 gap-3 mt-6">
-            <div className="p-3 rounded-xl bg-station-dark/80 border border-station-border/60">
-              <span className="text-[10px] uppercase font-bold text-station-gold block">
-                Dial
+            <div className="p-3.5 rounded-2xl bg-khulumani-greenLight/60 border border-khulumani-border">
+              <span className="text-[10px] uppercase font-extrabold text-khulumani-greenDark block">
+                FM Frequency
               </span>
-              <span className="text-sm font-black text-white">95.0 FM</span>
+              <span className="text-base font-black text-khulumani-ink">
+                95.0 MHz
+              </span>
             </div>
-            <div className="p-3 rounded-xl bg-station-dark/80 border border-station-border/60">
-              <span className="text-[10px] uppercase font-bold text-station-teal block">
-                Bitrate
+            <div className="p-3.5 rounded-2xl bg-khulumani-greenLight/60 border border-khulumani-border">
+              <span className="text-[10px] uppercase font-extrabold text-khulumani-greenDark block">
+                Digital Stream
               </span>
-              <span className="text-sm font-black text-white">
+              <span className="text-base font-black text-khulumani-ink">
                 192 kbps MP3
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-station-dark/80 border border-station-border/60">
-              <span className="text-[10px] uppercase font-bold text-station-muted block">
-                Language
+            <div className="p-3.5 rounded-2xl bg-khulumani-greenLight/60 border border-khulumani-border">
+              <span className="text-[10px] uppercase font-extrabold text-khulumani-greenDark block">
+                Languages
               </span>
-              <span className="text-xs font-bold text-white">
-                Ndebele, English, Shona
+              <span className="text-xs font-bold text-khulumani-ink">
+                Ndebele, English, Kalanga, Tonga, Venda, Sotho
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-station-dark/80 border border-station-border/60">
-              <span className="text-[10px] uppercase font-bold text-station-muted block">
-                Coverage
+            <div className="p-3.5 rounded-2xl bg-khulumani-greenLight/60 border border-khulumani-border">
+              <span className="text-[10px] uppercase font-extrabold text-khulumani-greenDark block">
+                Studios
               </span>
-              <span className="text-xs font-bold text-white">
-                Bulawayo &amp; Worldwide
+              <span className="text-xs font-bold text-khulumani-ink">
+                Montrose, Bulawayo
               </span>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-station-border/40 text-xs text-station-muted flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 text-station-gold" />
-            <span>Montrose Studios, Bulawayo</span>
-          </div>
-          <div className="flex items-center gap-1 text-station-gold text-xs">
-            <span>Powered by Hakili</span>
-            <Heart className="w-3 h-3 fill-current text-station-red" />
-          </div>
+        <div className="mt-6 pt-4 border-t border-khulumani-border text-xs text-khulumani-muted flex items-center justify-between">
+          <span className="inline-flex items-center gap-1.5 font-semibold">
+            <MapPin className="w-3.5 h-3.5 text-khulumani-green" />
+            {STATION_CONTACTS.location}
+          </span>
+          <span className="font-extrabold text-khulumani-greenDark">
+            ZBC Community Radio
+          </span>
         </div>
       </div>
     </div>

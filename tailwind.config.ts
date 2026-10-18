@@ -9,20 +9,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        station: {
-          dark: "#0d0f12",
-          card: "#15181e",
-          border: "#232833",
-          gold: "#f59e0b",
-          amber: "#d97706",
-          teal: "#0d9488",
-          red: "#ef4444",
-          muted: "#94a3b8",
+        khulumani: {
+          green: "#1c9f56",
+          greenDark: "#0d5c31",
+          greenLight: "#e8f6ee",
+          tangelo: "#ff7e17",
+          teal: "#22a1af",
+          bg: "#f6f9f7",
+          surface: "#ffffff",
+          border: "#dce8e0",
+          ink: "#141f18",
+          muted: "#4a5d50",
         },
       },
       fontFamily: {
-        display: ["system-ui", "sans-serif"],
-        body: ["system-ui", "sans-serif"],
+        display: ["system-ui", "-apple-system", "sans-serif"],
+        body: ["system-ui", "-apple-system", "sans-serif"],
       },
     },
   },

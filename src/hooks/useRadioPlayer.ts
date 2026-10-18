@@ -205,11 +205,7 @@ export function useRadioPlayer(
         artist: currentShowTitle,
         album: "Voice of the City of Kings & Queens (Bulawayo)",
         artwork: [
-          {
-            src: "https://www.khulumanifm.co.zw/wp-content/uploads/2021/10/cropped-favicon.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
+          { src: "/images/logo.png", sizes: "481x251", type: "image/png" },
         ],
       });
 
