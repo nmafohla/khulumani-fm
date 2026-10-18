@@ -90,19 +90,32 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
   const refreshCmsState = useCallback(async () => {
     setIsCheckingAuth(true);
     try {
-      const cmsRes = await fetch("/api/cms/content?mode=cms", {
+      const sessionRes = await fetch("/api/auth/session", {
         credentials: "include",
         cache: "no-store",
       });
-      if (cmsRes.ok) {
-        const data = (await cmsRes.json()) as {
-          snapshot: CmsSnapshot;
-          user: CmsSessionUser;
-        };
-        setSessionUser(data.user);
-        applySnapshot(data.snapshot);
-        setIsCheckingAuth(false);
-        return;
+      const sessionData = sessionRes.ok
+        ? ((await sessionRes.json()) as {
+            authenticated: boolean;
+            user: CmsSessionUser | null;
+          })
+        : { authenticated: false, user: null };
+
+      if (sessionData.authenticated) {
+        const cmsRes = await fetch("/api/cms/content?mode=cms", {
+          credentials: "include",
+          cache: "no-store",
+        });
+        if (cmsRes.ok) {
+          const data = (await cmsRes.json()) as {
+            snapshot: CmsSnapshot;
+            user: CmsSessionUser;
+          };
+          setSessionUser(data.user);
+          applySnapshot(data.snapshot);
+          setIsCheckingAuth(false);
+          return;
+        }
       }
 
       setSessionUser(null);
@@ -149,96 +162,55 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
     [sessionUser]
   );
 
-  const saveDraftToServer = useCallback(
+  const mutateCms = useCallback(
     async (
-      nextDraft: SiteContentPayload
+      method: "PUT" | "POST",
+      payload: unknown,
+      fallbackError: string
     ): Promise<{ ok: boolean; error?: string }> => {
       try {
         const res = await fetch("/api/cms/content", {
-          method: "PUT",
+          method,
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify(nextDraft),
+          body: JSON.stringify(payload),
         });
         const data = (await res.json()) as {
           snapshot?: CmsSnapshot;
           error?: string;
         };
         if (!res.ok || !data.snapshot) {
-          return {
-            ok: false,
-            error: data.error ?? "Failed to save draft changes.",
-          };
+          return { ok: false, error: data.error ?? fallbackError };
         }
         applySnapshot(data.snapshot);
         return { ok: true };
       } catch {
-        return { ok: false, error: "Network error while saving draft." };
+        return { ok: false, error: fallbackError };
       }
     },
     [applySnapshot]
   );
 
-  const publishToMainWebsite = useCallback(
-    async (
-      optionalDraft?: SiteContentPayload
-    ): Promise<{ ok: boolean; error?: string }> => {
-      try {
-        const res = await fetch("/api/cms/content", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({
-            action: "publish",
-            draft: optionalDraft ?? draftContent,
-          }),
-        });
-        const data = (await res.json()) as {
-          snapshot?: CmsSnapshot;
-          error?: string;
-        };
-        if (!res.ok || !data.snapshot) {
-          return {
-            ok: false,
-            error: data.error ?? "Failed to publish content to main website.",
-          };
-        }
-        applySnapshot(data.snapshot);
-        return { ok: true };
-      } catch {
-        return {
-          ok: false,
-          error: "Network error while publishing to main website.",
-        };
-      }
-    },
-    [applySnapshot, draftContent]
+  const saveDraftToServer = useCallback(
+    (nextDraft: SiteContentPayload) =>
+      mutateCms("PUT", nextDraft, "Failed to save draft changes."),
+    [mutateCms]
   );
 
-  const discardDraftOnServer = useCallback(async (): Promise<{
-    ok: boolean;
-    error?: string;
-  }> => {
-    try {
-      const res = await fetch("/api/cms/content", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ action: "discard" }),
-      });
-      const data = (await res.json()) as {
-        snapshot?: CmsSnapshot;
-        error?: string;
-      };
-      if (!res.ok || !data.snapshot) {
-        return { ok: false, error: data.error ?? "Failed to discard draft." };
-      }
-      applySnapshot(data.snapshot);
-      return { ok: true };
-    } catch {
-      return { ok: false, error: "Network error while discarding draft." };
-    }
-  }, [applySnapshot]);
+  const publishToMainWebsite = useCallback(
+    (optionalDraft?: SiteContentPayload) =>
+      mutateCms(
+        "POST",
+        { action: "publish", draft: optionalDraft ?? draftContent },
+        "Failed to publish content to main website."
+      ),
+    [draftContent, mutateCms]
+  );
+
+  const discardDraftOnServer = useCallback(
+    () => mutateCms("POST", { action: "discard" }, "Failed to discard draft."),
+    [mutateCms]
+  );
 
   const logoutFromCrm = useCallback(async () => {
     await fetch("/api/auth/logout", { method: "POST", credentials: "include" });

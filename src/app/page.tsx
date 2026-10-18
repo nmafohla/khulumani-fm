@@ -104,6 +104,9 @@ export default function HomePage() {
                     <img
                       src={track.coverImage}
                       alt={track.title}
+                      width={44}
+                      height={44}
+                      loading="lazy"
                       className="w-11 h-11 rounded-xl object-cover border border-khulumani-border shrink-0"
                     />
                     <div className="min-w-0">
@@ -166,6 +169,9 @@ export default function HomePage() {
                   <img
                     src={member.image}
                     alt={member.name}
+                    width={56}
+                    height={56}
+                    loading="lazy"
                     className="w-14 h-14 rounded-2xl object-cover border border-khulumani-border shrink-0"
                   />
                   <div className="min-w-0">

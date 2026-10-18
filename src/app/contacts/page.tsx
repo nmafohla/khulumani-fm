@@ -31,6 +31,8 @@ export default function ContactsPage() {
         <img
           src="/images/post-1.jpg"
           alt="Khulumani FM 95.0 Montrose Studios Bulawayo"
+          width={360}
+          height={252}
           className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-khulumani-greenDark/95 via-khulumani-green/90 to-khulumani-teal/85" />
@@ -55,6 +57,9 @@ export default function ContactsPage() {
               <img
                 src="/images/show-banner.jpg"
                 alt="Khulumani FM On Air Microphone"
+                width={280}
+                height={160}
+                fetchPriority="high"
                 className="w-full h-36 sm:h-40 object-cover"
               />
               <div className="p-2.5 text-[11px] font-extrabold text-amber-200 bg-black/50">
@@ -66,6 +71,8 @@ export default function ContactsPage() {
               <img
                 src="/images/post-2.jpg"
                 alt="Khulumani FM Studio Mixing Desk"
+                width={280}
+                height={160}
                 className="w-full h-36 sm:h-40 object-cover"
               />
               <div className="p-2.5 text-[11px] font-extrabold text-emerald-200 bg-black/50">

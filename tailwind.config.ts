@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         khulumani: {
-          green: "#1c9f56",
+          green: "#11753d",
           greenDark: "#0d5c31",
           greenLight: "#e8f6ee",
-          tangelo: "#ff7e17",
-          teal: "#22a1af",
+          tangelo: "#c24b00",
+          teal: "#0e6f7a",
           bg: "#f6f9f7",
           surface: "#ffffff",
           border: "#dce8e0",

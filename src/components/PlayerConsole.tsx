@@ -216,6 +216,9 @@ export function PlayerConsole() {
           <img
             src="/images/show-banner.jpg"
             alt="Khulumani FM 95.0 On Air Studio"
+            width={480}
+            height={320}
+            fetchPriority="high"
             className="absolute inset-0 w-full h-full object-cover opacity-85"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />

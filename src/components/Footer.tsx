@@ -15,6 +15,7 @@ export function Footer() {
               alt="Khulumani FM 95.0 - Izwi Lethu, Igugu Lethu"
               width={180}
               height={94}
+              loading="lazy"
               className="h-16 w-auto object-contain"
             />
             <h3 className="text-sm font-extrabold uppercase tracking-wider text-khulumani-greenDark">
