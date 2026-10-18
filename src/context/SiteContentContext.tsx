@@ -17,6 +17,16 @@ import { DEFAULT_SITE_CONTENT } from "@/lib/stationContent";
 
 const PUBLISHED_CACHE_KEY = "khulumani_published_content_cache_v1";
 const DRAFT_CACHE_KEY = "khulumani_draft_content_cache_v1";
+const SNAPSHOT_CACHE_KEY = "khulumani_cms_snapshot_v1";
+
+function readCachedSnapshot(): CmsSnapshot | null {
+  try {
+    const raw = window.localStorage.getItem(SNAPSHOT_CACHE_KEY);
+    return raw ? (JSON.parse(raw) as CmsSnapshot) : null;
+  } catch {
+    return null;
+  }
+}
 
 interface SiteContentContextValue {
   readonly activeContent: SiteContentPayload;
@@ -82,6 +92,7 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
         DRAFT_CACHE_KEY,
         JSON.stringify(snapshot.draft)
       );
+      window.localStorage.setItem(SNAPSHOT_CACHE_KEY, JSON.stringify(snapshot));
     } catch {
       // Ignore storage quota errors
     }
@@ -89,6 +100,7 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
 
   const refreshCmsState = useCallback(async () => {
     setIsCheckingAuth(true);
+    const cachedSnapshot = readCachedSnapshot();
     try {
       const res = await fetch("/api/cms/content", {
         credentials: "include",
@@ -104,24 +116,31 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
         };
         if (data.user && data.snapshot) {
           setSessionUser(data.user);
-          applySnapshot(data.snapshot);
+          const chosen =
+            cachedSnapshot &&
+            (cachedSnapshot.publishedVersion > data.snapshot.publishedVersion ||
+              cachedSnapshot.lastSavedDraftAt > data.snapshot.lastSavedDraftAt)
+              ? cachedSnapshot
+              : data.snapshot;
+          applySnapshot(chosen);
           return;
         }
         setSessionUser(null);
         setIsPreviewModeState(false);
+        if (
+          cachedSnapshot &&
+          cachedSnapshot.publishedVersion > data.publishedVersion
+        ) {
+          applySnapshot(cachedSnapshot);
+          return;
+        }
         setPublishedContent(data.published);
         setDraftContent(data.published);
         setPublishedVersion(data.publishedVersion);
         setLastPublishedAt(data.lastPublishedAt);
       }
     } catch {
-      try {
-        const cached = window.localStorage.getItem(PUBLISHED_CACHE_KEY);
-        if (cached)
-          setPublishedContent(JSON.parse(cached) as SiteContentPayload);
-      } catch {
-        // Ignore
-      }
+      if (cachedSnapshot) applySnapshot(cachedSnapshot);
     } finally {
       setIsCheckingAuth(false);
     }
