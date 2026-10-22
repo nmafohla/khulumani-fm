@@ -186,12 +186,24 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom Copyright */}
+        {/* Bottom Copyright & Hakili Attribution */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-khulumani-muted">
           <p>© The Zimbabwe Broadcasting Corporation. All rights reserved.</p>
-          <p className="font-semibold text-[#141414]">
-            Khulumani FM 95.0 — &ldquo;Izwi Lethu, Igugu Lethu&rdquo;
-          </p>
+          <div className="flex flex-wrap items-center gap-4">
+            <p className="font-semibold text-[#141414]">
+              Khulumani FM 95.0 — &ldquo;Izwi Lethu, Igugu Lethu&rdquo;
+            </p>
+            <span className="hidden sm:inline text-khulumani-border">•</span>
+            <a
+              href="https://hakili.co.zw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-[#119e45] hover:text-[#0d6e30] transition-colors inline-flex items-center gap-1.5"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#119e45]" />
+              Built by hakili.co.zw
+            </a>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Calendar, Mic2, ArrowRight, Sparkles, Radio } from "lucide-react";
+import { Calendar, Mic2, ArrowRight, Radio } from "lucide-react";
 import { useRadio } from "@/context/RadioPlayerContext";
 import { useSiteContent } from "@/context/SiteContentContext";
 import { getBulawayoTime } from "@/lib/schedule";
@@ -20,14 +20,14 @@ export function NowPlayingCard() {
       {/* Top 2-Card Apple Radio Glass Showcase (Live Now + Up Next) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Live On Air Card */}
-        <div className="lg:col-span-7 rounded-[28px] bg-white border border-khulumani-border p-6 sm:p-7 shadow-sm flex flex-col justify-between">
+        <div className="lg:col-span-7 rounded-[28px] bg-white border border-khulumani-border/80 p-6 sm:p-7 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-black bg-[#119e45] text-white uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" />
+              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-black bg-[#119e45] text-white uppercase tracking-wider shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
                 LIVE ON 95.0 FM
               </span>
-              <span className="px-3 py-1 rounded-full text-xs font-bold bg-khulumani-greenLight text-khulumani-greenDark">
+              <span className="px-3 py-1 rounded-full text-xs font-bold bg-khulumani-greenLight text-khulumani-greenDark border border-khulumani-green/15">
                 {currentShow.genre}
               </span>
               <span className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-khulumani-muted ml-auto">
@@ -53,13 +53,16 @@ export function NowPlayingCard() {
           </div>
 
           <div className="mt-5 pt-4 border-t border-khulumani-border flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-khulumani-muted">
-            <span>Montrose Studios • Bulawayo, Zimbabwe</span>
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-khulumani-green" />
+              Montrose Studios • Bulawayo, Zimbabwe
+            </span>
             <Link
               href="/team-members"
-              className="min-h-[44px] px-3 rounded-xl text-[#119e45] hover:text-[#0d6e30] font-extrabold inline-flex items-center gap-1 apple-spring active:scale-[0.96]"
+              className="min-h-[44px] px-3.5 rounded-xl text-[#119e45] hover:text-[#0d6e30] font-extrabold inline-flex items-center gap-1 apple-spring active:scale-[0.96] group"
             >
               <span>Meet Presenters</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
         </div>
@@ -72,7 +75,7 @@ export function NowPlayingCard() {
                 <Radio className="w-4 h-4" />
                 Up Next on 95.0 FM
               </span>
-              <span className="px-2.5 py-1 rounded-full bg-black/40 text-white font-mono">
+              <span className="px-2.5 py-1 rounded-full bg-black/40 text-white font-mono border border-white/10">
                 {nextShow.timeLabel}
               </span>
             </div>
@@ -86,18 +89,18 @@ export function NowPlayingCard() {
               <span>With {nextShow.presenter}</span>
             </div>
 
-            <p className="text-xs text-white/90 mt-2.5 leading-relaxed">
+            <p className="text-xs text-white/95 mt-2.5 leading-relaxed">
               {nextShow.description}
             </p>
           </div>
 
           <div className="mt-5 pt-4 border-t border-white/20 flex items-center justify-between text-xs">
-            <span className="text-white/85 font-semibold">
+            <span className="text-white/90 font-semibold">
               7-Day Interactive Guide
             </span>
             <Link
               href="/shows-schedule"
-              className="min-h-[44px] px-4 rounded-xl bg-white text-[#141414] font-black inline-flex items-center hover:bg-[#4ade80] apple-spring active:scale-[0.96]"
+              className="min-h-[44px] px-4 rounded-xl bg-white text-[#141414] font-black inline-flex items-center hover:bg-[#4ade80] apple-spring active:scale-[0.96] transition-colors"
             >
               Full Schedule
             </Link>

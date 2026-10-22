@@ -59,18 +59,18 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="divide-y divide-khulumani-border mt-2">
+            <div className="divide-y divide-khulumani-border/60 mt-2">
               {topFourTracks.map((track) => (
                 <div
                   key={track.position}
-                  className="py-3.5 flex items-center justify-between gap-3"
+                  className="py-3 px-2 rounded-2xl flex items-center justify-between gap-3 group hover:bg-khulumani-bg/80 transition-colors"
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
                     <span
-                      className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shrink-0 ${
+                      className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shrink-0 shadow-sm ${
                         track.position === 1
-                          ? "bg-khulumani-tangelo text-white"
-                          : "bg-khulumani-greenLight text-khulumani-greenDark"
+                          ? "bg-khulumani-tangelo text-white ring-2 ring-khulumani-tangelo/30"
+                          : "bg-khulumani-greenLight text-khulumani-greenDark border border-khulumani-green/20"
                       }`}
                     >
                       #{track.position}
@@ -82,10 +82,10 @@ export default function HomePage() {
                       width={44}
                       height={44}
                       loading="lazy"
-                      className="w-11 h-11 rounded-xl object-cover border border-khulumani-border shrink-0"
+                      className="w-11 h-11 rounded-xl object-cover border border-khulumani-border shrink-0 group-hover:scale-105 transition-transform duration-200"
                     />
                     <div className="min-w-0">
-                      <h3 className="text-sm font-black text-khulumani-ink truncate">
+                      <h3 className="text-sm font-black text-khulumani-ink truncate group-hover:text-khulumani-green transition-colors">
                         {track.title}
                       </h3>
                       <p className="text-xs font-semibold text-khulumani-muted truncate">
@@ -93,7 +93,7 @@ export default function HomePage() {
                       </p>
                     </div>
                   </div>
-                  <span className="text-xs font-mono font-bold text-khulumani-greenDark shrink-0">
+                  <span className="text-xs font-mono font-bold text-khulumani-greenDark shrink-0 bg-khulumani-greenLight/60 px-2.5 py-1 rounded-full border border-khulumani-green/15">
                     {track.votes.toLocaleString()} votes
                   </span>
                 </div>
@@ -138,7 +138,7 @@ export default function HomePage() {
                 <Link
                   key={member.id}
                   href="/team-members"
-                  className="p-3.5 rounded-2xl bg-khulumani-bg/70 border border-khulumani-border hover:border-khulumani-green transition-all flex items-center gap-3.5"
+                  className="p-3.5 rounded-2xl bg-khulumani-bg/60 border border-khulumani-border/80 hover:border-khulumani-green hover:bg-white hover:shadow-sm apple-spring active:scale-[0.98] transition-all flex items-center gap-3.5 group"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -147,10 +147,10 @@ export default function HomePage() {
                     width={56}
                     height={56}
                     loading="lazy"
-                    className="w-14 h-14 rounded-2xl object-cover border border-khulumani-border shrink-0"
+                    className="w-14 h-14 rounded-2xl object-cover border border-khulumani-border shrink-0 group-hover:ring-2 group-hover:ring-khulumani-green/40 transition-all"
                   />
                   <div className="min-w-0">
-                    <h3 className="text-sm font-black text-khulumani-ink truncate">
+                    <h3 className="text-sm font-black text-khulumani-ink truncate group-hover:text-khulumani-green transition-colors">
                       {member.name}
                     </h3>
                     <p className="text-xs font-extrabold text-khulumani-green truncate">
@@ -207,26 +207,26 @@ export default function HomePage() {
             <Link
               key={item.id}
               href="/news"
-              className="p-5 rounded-2xl bg-khulumani-bg/60 border border-khulumani-border hover:border-khulumani-green transition-all flex flex-col justify-between"
+              className="p-5 rounded-2xl bg-khulumani-bg/60 border border-khulumani-border/80 hover:border-khulumani-green hover:bg-white hover:shadow-md apple-spring active:scale-[0.98] transition-all flex flex-col justify-between group"
             >
               <div>
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-khulumani-greenLight text-khulumani-greenDark text-[11px] font-extrabold">
+                <div className="flex items-center justify-between gap-2 mb-2.5">
+                  <span className="px-2.5 py-0.5 rounded-full bg-khulumani-greenLight text-khulumani-greenDark text-[11px] font-extrabold border border-khulumani-green/20">
                     {item.category}
                   </span>
                   <span className="text-xs font-semibold text-khulumani-muted">
                     {item.date}
                   </span>
                 </div>
-                <h3 className="text-base font-black text-khulumani-ink">
+                <h3 className="text-base font-black text-khulumani-ink group-hover:text-khulumani-green transition-colors">
                   {item.title}
                 </h3>
                 <p className="text-xs text-khulumani-muted mt-2 leading-relaxed line-clamp-2">
                   {item.excerpt}
                 </p>
               </div>
-              <span className="inline-flex items-center gap-1 text-xs font-extrabold text-khulumani-green mt-4">
-                Read full bulletin <ArrowRight className="w-3.5 h-3.5" />
+              <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-khulumani-green mt-4 group-hover:text-khulumani-greenDark">
+                Read full bulletin <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
           ))}
