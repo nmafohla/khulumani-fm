@@ -46,6 +46,8 @@ Every variable read by the application is documented in `.env.example`:
 | `CRM_ADMIN_PASSWORD_HASH` | Bcrypt hash of the Studio Admin password                             | Run `node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 10))" "<your-password>"` |
 | `CRM_SESSION_SECRET`      | 32-byte random hex secret for signing `HttpOnly` CRM session cookies | Run `openssl rand -hex 32`                                                                       |
 | `ALLOWED_ORIGINS`         | Comma-separated allowlist of origins for state-changing API requests | `https://khulumani.hakili.online,http://localhost:3000`                                          |
+| `SITE_LOCK_PASSWORD`      | Password required to unlock the protected preview site               | Set via `vercel env add SITE_LOCK_PASSWORD`                                                      |
+| `SITE_LOCK_SECRET`        | 32-byte random hex secret used to sign `HttpOnly` site lock cookies  | Run `openssl rand -hex 32`                                                                       |
 
 ---
 
