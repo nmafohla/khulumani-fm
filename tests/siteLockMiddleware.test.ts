@@ -65,7 +65,7 @@ describe("Site Lock Middleware", () => {
     });
     const okRes = await middleware(okReq);
     expect(okRes.status).toBe(303);
-    expect(okRes.headers.get("location")).toBe("/crm");
+    expect(okRes.headers.get("location")).toBe("https://example.com/crm");
     const setCookie = okRes.headers.get("set-cookie");
     expect(setCookie).toContain("hakili_site_lock=");
     expect(setCookie).toContain("HttpOnly");

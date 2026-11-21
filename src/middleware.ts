@@ -163,10 +163,9 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     if (constantTimeEqual(a, b)) {
       const exp = String(Date.now() + TTL_MS);
       const sig = toHex(await hmacDigest(secret, `v1.${exp}`));
-      return new NextResponse(null, {
+      return NextResponse.redirect(new URL(nextPath, request.url), {
         status: 303,
         headers: {
-          location: nextPath,
           "set-cookie": `${COOKIE_NAME}=${exp}.${sig}; Path=/; Max-Age=604800; HttpOnly; Secure; SameSite=Lax`,
           "cache-control": "no-store",
         },
